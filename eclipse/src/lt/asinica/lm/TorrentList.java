@@ -203,7 +203,6 @@ public class TorrentList extends ListActivity implements OnScrollListener {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Torrent t = (Torrent) parent.getAdapter().getItem(position);
 			t.view(TorrentList.this);
-			// TODO on click listeners;
 		}
 	};		
 	

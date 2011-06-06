@@ -1,17 +1,23 @@
 package lt.asinica.lm;
 
+import java.io.IOException;
+
+import lt.asinica.lm.exceptions.BadPasswordException;
+import lt.asinica.lm.helpers.LM;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,7 +25,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Main extends Activity {
-	private boolean menuEnabled = true;
+	private boolean mMenuEnabled = true;
+	private SharedPreferences mPreferences;
+	private ProgressDialog mProgressDialog;
 	
     /** Called when the activity is first created. */
     @Override
@@ -27,37 +35,117 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     	
-    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    	mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     	// if not logged in
-    	if(!prefs.contains("lmsecret") || prefs.getString("lmsecret", "").length() == 0 ) {
+    	if(!mPreferences.contains("lmsecret") || mPreferences.getString("lmsecret", "").length() == 0 ) {
     		initLogin();
     	} else {//if logged in
     		initSearch();
     	}
     	
-    	if(prefs.getBoolean("autoupdatecheck", true))
+    	if(mPreferences.getBoolean("autoupdatecheck", true))
     		 Updater.getInstance().checkForNewVersion();
     }
     private void initSearch() {
+    	findViewById(R.id.main_logged_in).setVisibility(View.VISIBLE);
+    	findViewById(R.id.main_logged_out).setVisibility(View.GONE);
+    	
+    	EditText searchField = (EditText) findViewById(R.id.search);
+    	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    	imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
     	
 		Button myButton = (Button) findViewById(R.id.fetch);
     	myButton.setOnClickListener(this.btnListener);
     	
-		// display button at bottom to open prefs
-		Button oSettings = (Button) findViewById(R.id.open_settings);
-		oSettings.setVisibility(View.VISIBLE);
-		oSettings.setOnClickListener(new OnClickListener() { public void onClick(View v) {
-			Intent i = new Intent(Main.this, Preferences.class);
-			startActivity(i);
-		}});
+    	// TODO Informacijos sekcijos perdarymas á naujas funkcijas arba prasminæ info. 
+    	
+    	// display button at bottom to open prefs if uTorrent host is unspecified
+    	if( !mPreferences.contains("hostip") || mPreferences.getString("hostip", "").length() == 0 ) {
+			Button oSettings = (Button) findViewById(R.id.open_settings);
+			oSettings.setVisibility(View.VISIBLE);
+			oSettings.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					Intent i = new Intent(Main.this, Preferences.class);
+					startActivity(i);
+				}
+			});
+    	}
     }
     private void initLogin() {
-    	menuEnabled = false;
+    	// disable menu inflater
+    	mMenuEnabled = false;
+    	// display the logged out frame and hide the logged in frame
+    	findViewById(R.id.main_logged_out).setVisibility(View.VISIBLE);
+    	findViewById(R.id.main_logged_in).setVisibility(View.GONE);
+    	
+    	Button loginButton = (Button) findViewById(R.id.login_action);
+    	final EditText username = (EditText) findViewById(R.id.login_username);
+    	final EditText password = (EditText) findViewById(R.id.login_password);
+    	
+    	OnClickListener loginListener = new OnClickListener() {
+			public void onClick(View v) {
+				String u = username.getText().toString();
+				String p = password.getText().toString();
+				Thread loginThread = new Thread(new Login(u, p), "LM Login Thread");
+				mProgressDialog = ProgressDialog.show(Main.this, getString(R.string.please_wait), getString(R.string.lm_logging_in), true);
+				loginThread.start();
+			}
+		};
+		
+    	loginButton.setOnClickListener(loginListener);
+    }
+    
+    private class Login implements Runnable {
+    	String mUsername;
+    	String mPassword;
+    	public Login(String username, String password) {
+    		mUsername = username;
+    		mPassword = password;
+    	}
+		public void run() {
+			String msg = null;
+			boolean success = false;
+			try {
+				String lmsecret = LM.login(mUsername, mPassword);
+				Editor editor = mPreferences.edit();
+				editor.putString("lmsecret", lmsecret);
+				editor.commit();
+				success = true;
+			} catch (BadPasswordException e) {
+				msg = getString(R.string.lm_bad_password);
+				Log.e("DEBUG", msg);
+				e.printStackTrace();
+			} catch (IOException e) {
+				msg = getString(R.string.lm_no_connectivity)+" "+e.getMessage();
+				Log.e("DEBUG", msg);
+				e.printStackTrace();
+			}
+			runOnUiThread(new AfterLogin(msg, success));
+		}
+    }
+    
+    private class AfterLogin implements Runnable {
+    	private String mMessage;
+    	private boolean mSuccess;
+    	public AfterLogin(String msg, boolean suc) {
+    		mMessage = msg;
+    		mSuccess = suc;
+    	}
+    	
+		public void run() {
+			mProgressDialog.dismiss();
+			if(mMessage!=null) {
+				toast(mMessage);
+			}
+			if(mSuccess) {
+				LMApp.restart();
+			}
+		}
     }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	if(menuEnabled) {
+    	if(mMenuEnabled) {
 	        MenuInflater inflater = getMenuInflater();
 	        inflater.inflate(R.menu.menu, menu);
     	}

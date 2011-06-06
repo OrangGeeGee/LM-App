@@ -246,7 +246,6 @@ public class Tag {
     static {
         // prepped from http://www.w3.org/TR/REC-html40/sgml/dtd.html#inline
         // tags are set here in uppercase for legibility, but internally held as lowercase.
-        // TODO[must]: incorporate html 5 as appropriate
 
         // document
         createBlock("HTML").setAncestor(); // specific includes not impl

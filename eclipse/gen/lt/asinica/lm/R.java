@@ -119,6 +119,7 @@ public final class R {
         public static final int lm_file_downloaded_prompt=0x7f05002b;
         public static final int lm_file_downloading=0x7f050029;
         public static final int lm_loading_more=0x7f050026;
+        public static final int lm_logging_in=0x7f050030;
         public static final int lm_login_success=0x7f050028;
         public static final int lm_no_connectivity=0x7f05002e;
         public static final int lm_not_logged_in=0x7f05002d;
@@ -134,7 +135,7 @@ public final class R {
         public static final int new_version_avaliable=0x7f050003;
         public static final int new_version_more_info=0x7f050004;
         public static final int no=0x7f05000b;
-        public static final int no_application_associated=0x7f050030;
+        public static final int no_application_associated=0x7f050031;
         public static final int no_results=0x7f050008;
         public static final int open_torrent=0x7f050012;
         public static final int please_wait=0x7f050009;
@@ -150,13 +151,13 @@ public final class R {
         public static final int t_peers=0x7f05001b;
         public static final int t_size=0x7f05001a;
         public static final int t_title=0x7f050018;
-        public static final int updater_activity_label=0x7f050036;
-        public static final int updater_cancel=0x7f050034;
-        public static final int updater_failed_to_download=0x7f050037;
-        public static final int updater_header=0x7f050031;
-        public static final int updater_info=0x7f050032;
-        public static final int updater_update=0x7f050033;
-        public static final int updater_update_downloading=0x7f050035;
+        public static final int updater_activity_label=0x7f050037;
+        public static final int updater_cancel=0x7f050035;
+        public static final int updater_failed_to_download=0x7f050038;
+        public static final int updater_header=0x7f050032;
+        public static final int updater_info=0x7f050033;
+        public static final int updater_update=0x7f050034;
+        public static final int updater_update_downloading=0x7f050036;
         public static final int ut_cant_connect=0x7f05001f;
         public static final int ut_send_in_progress=0x7f050020;
         public static final int ut_send_success=0x7f050021;

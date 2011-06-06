@@ -39,6 +39,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -62,10 +63,7 @@ public class LM {
 		
 	}
 	
-	public static boolean login() throws BadPasswordException, IOException {
-    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LMApp.getDefaultContext());
-		String username = prefs.getString("lmusername", "");		
-		String password = prefs.getString("lmpassword", "");
+	public static String login(String username, String password) throws BadPasswordException, IOException {
 		//String secret  = prefs.getString("lmsecret", "");
 		
 		DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -90,25 +88,17 @@ public class LM {
 			Iterator<Cookie> i = cookies.iterator();
 			Cookie tmp;
 			String nTmp;
-			boolean found = false;
-			while(!found && i.hasNext()) {
+			while(i.hasNext()) {
 				tmp = i.next();
 				nTmp = tmp.getName();
 				if(nTmp.equals("login")) {
-					prefs.edit()
-						.putString("lmsecret", tmp.getValue())
-						.commit();
-					return true;
+					return tmp.getValue();
 				}
 			}
-			if(!found) {
-				throw new BadPasswordException();
-			}
+			throw new BadPasswordException();
 		} else {
 			throw new BadPasswordException();
 		}
-        
-		return false;
 	}
 	public static Torrents search(String query, boolean inDescriptions) throws NotLoggedInException, IOException {
 		return search(query, inDescriptions, 0);
@@ -161,6 +151,9 @@ public class LM {
 			String charset = response.charset();
 			doc = Jsoup.parse( new String(binary, charset) );*/
 			if(doc.select("#username").isEmpty()) {
+				Editor editor = PreferenceManager.getDefaultSharedPreferences(LMApp.getDefaultContext()).edit();
+				editor.remove("lmsecret").commit();
+				LMApp.restart();
 				throw new NotLoggedInException();
 			}
 			cacheObj.put(url, doc.html());

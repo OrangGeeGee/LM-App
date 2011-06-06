@@ -3,9 +3,9 @@
         <PreferenceCategory
                 android:title="LinkoManija.net">
 	        <Preference
-	                android:title="Prisijungti"
+	                android:title="Atsijungti"
 	                android:summary=""
-	                android:key="checkLM" />
+	                android:key="logoutLM" />
         </PreferenceCategory>
         <PreferenceCategory
                 android:title="uTorrent susiejimas">

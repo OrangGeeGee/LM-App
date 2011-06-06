@@ -373,7 +373,7 @@ public abstract class Node implements Cloneable {
      @return node siblings, including this node
      */
     public List<Node> siblingNodes() {
-        return parent().childNodes(); // TODO: should this strip out this node? i.e. not a sibling of self?
+        return parent().childNodes();
     }
 
     /**

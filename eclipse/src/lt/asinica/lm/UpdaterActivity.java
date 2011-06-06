@@ -1,11 +1,8 @@
 package lt.asinica.lm;
 
-import java.net.URI;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +15,6 @@ public class UpdaterActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		try {
 		stopService(new Intent(this, UpdateService.class));
@@ -61,7 +57,7 @@ public class UpdaterActivity extends Activity {
 		dialog.setIndeterminate(true);
 		dialog.show();
 		
-		Runnable dl = Updater.getInstance().downloader(path, "LM App.apk", mUpdateDetails.getString("downloadUrl"), UpdaterActivity.this, dialog);
+		Runnable dl = Updater.getInstance().downloader(path, "LM App.apk", url, UpdaterActivity.this, dialog);
 		
 		Thread t = new Thread(dl, "New Version Downloader Thread");
 		t.start();

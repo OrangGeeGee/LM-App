@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import lt.asinica.lm.helpers.UTorrent;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -13,6 +14,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Window;
 
 public class Preferences extends PreferenceActivity {
@@ -80,9 +82,11 @@ public class Preferences extends PreferenceActivity {
         Preference checkLM = (Preference) findPreference("logoutLM");
         checkLM.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-            	Editor e = prefs.edit();
-            	e.remove("lmsecret");
-            	e.commit();
+            	Editor editor = prefs.edit();
+            	editor.remove("lmsecret");
+            	editor.commit();
+            	LMApp.restart();
+
             	return true;
             }
         });

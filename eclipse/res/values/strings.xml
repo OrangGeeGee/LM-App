@@ -59,6 +59,7 @@
     <string name="lm_not_logged_in">Jūs esate neprisijungęs prie LinkoManijos, eikite į nustatymus ir prisijunkite.</string>
     <string name="lm_no_connectivity">Nepavyko prisijungti prie LinkoManijos, patikrinkite interneto ryšį.</string>
     <string name="lm_bad_password">Nepavyko prisijungti prie LinkoManijos, patikrinkite prisijungimo duomenis.</string>
+    <string name="lm_logging_in">Prisijunginėjama prie LinkoManijos...</string>
     
     <string name="no_application_associated">Nerasta nei viena programa susieta su .torrent tipo failais.</string>
     
