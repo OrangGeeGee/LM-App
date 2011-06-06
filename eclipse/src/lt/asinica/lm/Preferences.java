@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import lt.asinica.lm.helpers.LMInterface;
-import lt.asinica.lm.helpers.UTorrentInterface;
+import lt.asinica.lm.helpers.UTorrent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -44,7 +44,7 @@ public class Preferences extends PreferenceActivity {
         addPreferencesFromResource(R.xml.preferences);
         
         // add a listener for preference changes and populate list
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(listener);
         Map<String, ?> allPrefs = prefs.getAll();
         Iterator<String> i= allPrefs.keySet().iterator();
@@ -62,10 +62,19 @@ public class Preferences extends PreferenceActivity {
         Preference checkConnectivity = (Preference) findPreference("checkConnectivity");
         checkConnectivity.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-            	UTorrentInterface u = new UTorrentInterface( Preferences.this );
-            	Bundle b = new Bundle();
-            	b.putInt("action", UTorrentInterface.ACTION_TEST_CONNECTIVITY);
-            	u.execute(b);
+    			String host = prefs.getString("hostip", "");
+    			int port = 8080;
+    			try {
+    				port = Integer.parseInt(prefs.getString("hostport", ""));
+    			} catch(Exception e) { }
+    			String username = prefs.getString("hostusername", "");
+    			String password = prefs.getString("hostpassword", "");
+    			UTorrent torrent = UTorrent.getInstance();
+    			torrent.setServerInfo(host, port, username, password);
+    			
+    			Thread thread = new Thread(torrent.tester( Preferences.this ), "uTorrent Connectivity Tester Thread");
+            	thread.start();
+            	
             	return true;
             }
         });

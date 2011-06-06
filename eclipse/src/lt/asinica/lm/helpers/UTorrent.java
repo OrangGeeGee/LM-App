@@ -3,7 +3,7 @@ package lt.asinica.lm.helpers;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-import lt.asinica.lm.LMApp;
+import lt.asinica.lm.R;
 import lt.asinica.lm.exceptions.InvalidTokenException;
 
 import org.apache.http.HttpResponse;
@@ -17,8 +17,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.app.Activity;
+import android.util.Log;
+import android.widget.Toast;
 
 public class UTorrent {
 	
@@ -80,6 +81,36 @@ public class UTorrent {
 		request(suffix);
 		//request();
 	}
+	public Runnable tester(final Activity context) {
+		return new Runnable() { public void run() {
+			String answer = null;
+			try {
+				if(test()) {
+					answer = context.getString(R.string.ut_test_success);
+				}
+			} catch (InvalidTokenException e) {
+				Log.e("DEBUG", "Exception "+e.getClass().toString()+". "+e.getMessage());
+				answer = context.getString(R.string.ut_unexpected_response);
+				e.printStackTrace();					
+			} catch (ClientProtocolException e) {
+				Log.e("DEBUG", "Exception "+e.getClass().toString()+". "+e.getMessage());
+				answer = context.getString(R.string.ut_cant_connect)+" "+e.getMessage();
+				e.printStackTrace();					
+			} catch (IOException e) {
+				Log.e("DEBUG", "Exception "+e.getClass().toString()+". "+e.getMessage());
+				answer = context.getString(R.string.ut_cant_connect)+" "+e.getMessage();
+				e.printStackTrace();
+			}		
+			
+			if(answer!=null) {
+				final String tmp = answer;
+				context.runOnUiThread(new Runnable() { public void run() {
+					Toast.makeText(context, tmp, Toast.LENGTH_LONG).show();
+				} });
+			}
+		} };
+	}
+	
 	public boolean test() throws ClientProtocolException, InvalidTokenException, IOException {
 		String resp = request("?action=getsettings&{token}");
 		if(resp.length()>0) return true;
