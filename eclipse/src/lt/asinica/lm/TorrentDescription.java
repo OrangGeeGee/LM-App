@@ -4,10 +4,8 @@ import java.io.IOException;
 
 import lt.asinica.lm.exceptions.NotLoggedInException;
 import lt.asinica.lm.helpers.LM;
-import lt.asinica.lm.helpers.ListPack;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
