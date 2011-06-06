@@ -2,19 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
         <PreferenceCategory
                 android:title="LinkoManija.net">
-	        <EditTextPreference
-	                android:title="Prisijungimo Vardas"
-	                android:summary="Jūsų linkomanija.net prisijungimo vardas"
-	                android:defaultValue=""
-	                android:name="LM Login"
-	                android:key="lmusername" />
-	        <EditTextPreference
-	                android:title="Slaptažodis"	                
-	                android:summary="Jūsų linkomanija.net slaptažodis"
-	                android:defaultValue=""
-	                android:name="LM Password"
-	                android:password="true"
-	                android:key="lmpassword" />	                
 	        <Preference
 	                android:title="Prisijungti"
 	                android:summary=""

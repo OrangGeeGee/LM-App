@@ -3,9 +3,9 @@ package lt.asinica.lm;
 import java.util.Iterator;
 import java.util.Map;
 
-import lt.asinica.lm.helpers.LMInterface;
 import lt.asinica.lm.helpers.UTorrent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -25,8 +25,6 @@ public class Preferences extends PreferenceActivity {
 				String val = sharedPreferences.getString(key, "");
 				pref.setSummary(val);
 			}
-			
-			
 		}
 	};
 	
@@ -79,39 +77,15 @@ public class Preferences extends PreferenceActivity {
             }
         });
         
-        Preference checkLM = (Preference) findPreference("checkLM");
+        Preference checkLM = (Preference) findPreference("logoutLM");
         checkLM.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
-            	LMInterface lm = new LMInterface( Preferences.this );
-            	Bundle b = new Bundle();
-            	b.putInt("action", LMInterface.ACTION_LOGIN);
-            	lm.execute(b);
+            	Editor e = prefs.edit();
+            	e.remove("lmsecret");
+            	e.commit();
             	return true;
             }
         });
         
-        
-        /*Preference instructions = (Preference) findPreference("instructions");
-        
-        instructions.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-            	AlertDialog.Builder builder = new AlertDialog.Builder(Preferences.this);
-            	builder.setMessage("Are you sure you want to exit?")
-            		.setView(arg0)
-            	       .setCancelable(false)
-            	       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            	           public void onClick(DialogInterface dialog, int id) {
-            	                MyActivity.this.finish();
-            	           }
-            	       })
-            	       .setNegativeButton("No", new DialogInterface.OnClickListener() {
-            	           public void onClick(DialogInterface dialog, int id) {
-            	                dialog.cancel();
-            	           }
-            	       });
-            	AlertDialog alert = builder.create();
-            	return true;
-            }
-        });*/
     }
 }

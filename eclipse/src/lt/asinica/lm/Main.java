@@ -19,36 +19,49 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Main extends Activity {
-
-	private EditText searchField;
+	private boolean menuEnabled = true;
 	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.main);
-    	Button myButton = (Button) findViewById(R.id.fetch);
-    	myButton.setOnClickListener(this.btnListener);
-    	searchField = (EditText) findViewById(R.id.search);
+    	
     	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-    	if(!prefs.contains("lmsecret")) {
-    		Button oSettings = (Button) findViewById(R.id.open_settings);
-    		oSettings.setVisibility(View.VISIBLE);
-    		oSettings.setOnClickListener(new OnClickListener() { public void onClick(View v) {
-				Intent i = new Intent(Main.this, Preferences.class);
-				startActivity(i);
-			}});
+    	// if not logged in
+    	if(!prefs.contains("lmsecret") || prefs.getString("lmsecret", "").length() == 0 ) {
+    		initLogin();
+    	} else {//if logged in
+    		initSearch();
     	}
+    	
     	if(prefs.getBoolean("autoupdatecheck", true))
     		 Updater.getInstance().checkForNewVersion();
     }
+    private void initSearch() {
+    	
+		Button myButton = (Button) findViewById(R.id.fetch);
+    	myButton.setOnClickListener(this.btnListener);
+    	
+		// display button at bottom to open prefs
+		Button oSettings = (Button) findViewById(R.id.open_settings);
+		oSettings.setVisibility(View.VISIBLE);
+		oSettings.setOnClickListener(new OnClickListener() { public void onClick(View v) {
+			Intent i = new Intent(Main.this, Preferences.class);
+			startActivity(i);
+		}});
+    }
+    private void initLogin() {
+    	menuEnabled = false;
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        
-        return true;
+    	if(menuEnabled) {
+	        MenuInflater inflater = getMenuInflater();
+	        inflater.inflate(R.menu.menu, menu);
+    	}
+    	return true;
     }   
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -68,6 +81,7 @@ public class Main extends Activity {
     }    
 
     
+    
     public void toast(CharSequence text) {
     	Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
@@ -79,6 +93,8 @@ public class Main extends Activity {
         public void onClick(View v) {
         	//httpget.setHeader("Cookie", "login=OTI3NDQ6TXpFMVptVXdaamxtWTJZM1pHTTNaV1ZpTURsbVpXVTNNekJsTUdGalpUaz0%3D;");
 				//toast(e.getMessage());
+        	
+        	EditText searchField = (EditText) findViewById(R.id.search);
         	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         	imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
         	

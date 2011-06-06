@@ -26,6 +26,10 @@
     <string name="open_torrent">Atsisiųsti .torrent failą</string>
     <string name="send_to_utorrent">Siųsti tiesiai į uTorrent</string>
     
+    <string name="login_username">Prisijungimo Vardas</string>
+    <string name="login_password">Slaptažodis</string>
+    <string name="login_action">Prisijungti</string>
+    
     <string name="t_information">Informacija</string>
     <string name="t_title">Pavadinimas</string>
     <string name="t_date_added">Įdėta</string>

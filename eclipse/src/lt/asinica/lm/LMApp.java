@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class LMApp extends Application{
+public class LMApp extends Application {
 
 	private static LMApp instance;
 	public static LMApp getInstance() {
