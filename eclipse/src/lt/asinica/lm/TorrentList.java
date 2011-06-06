@@ -37,7 +37,6 @@ public class TorrentList extends ListActivity implements OnScrollListener {
 	private ProgressDialog progressDialog = null;
 	private TorrentAdapter listAdapter;
 	private ListView listView;
-	private Runnable loadTorrents;
 	private Torrents torrents = new Torrents();
 	private Torrents lastResult = null;
 	private int page = 0;

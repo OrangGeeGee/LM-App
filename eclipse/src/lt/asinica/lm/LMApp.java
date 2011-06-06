@@ -1,21 +1,10 @@
 package lt.asinica.lm;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
-
-import lt.asinica.lm.helpers.DownloadProgressUpdater;
-import lt.asinica.lm.helpers.LM;
 import lt.asinica.lm.helpers.UTorrent;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class LMApp extends Application{
 
