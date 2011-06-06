@@ -1,7 +1,9 @@
 Changelog:
 v0.2.1
 New Feature: Prie torrento sarase dabar rodomas "N", jei torrentas naujas
-Fixed: 
+New Feature: Pridëtas refresh mygtukas torrentø sàraðe.
+Fixed: Apraðymas su rusiðkais simboliais dabar gerai atvaizduojamas
+Fixed: Smulkiø bugø iðtaisymai
 
 v0.2
 New Feature/Fix: FreeLeech torrentai gerai atpaþástami
