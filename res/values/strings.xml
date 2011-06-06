@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_download_path">Download/</string>
+    
+    <string name="app_name">LM App</string>
+    <string name="preferences_name">LM App Nustatymai</string>
+    <string name="new_version_avaliable">LM App - yra atnaujinimas</string>
+    <string name="new_version_more_info">Paspaudę atnaujinsite apps\'ą į {version} versiją</string>
+    <string name="search_hint">Ieškoti linkomanijoje</string>
+    <string name="search_button">Go</string>
+    <string name="search_in_descriptions">aprašymuose</string>
+    <string name="no_results">Pagal pateiktus paieškos kriterijus nieko nerasta.</string>
+    <string name="please_wait">Prašome palaukti...</string>
+    <string name="yes">Taip</string>    
+    <string name="no">Ne</string>
+    <string name="info_header">Informacija</string>
+	<string name="info">
+	Sveiki atvykę, sveikinu naudojantis šiuo apps\'u v0.1.1!
+	Iki kol nebus daugiau funkcijų šis informacijos laukas liks beprasmis :)
+	</string>    
+    <string name="menu_settings">Nustatymai</string>
+    <string name="menu_update">Patikrinti atnaujinimų</string>
+    <string name="menu_refresh">Atnaujinti</string>
+    
+    <string name="view_torrent">Peržiūrėti</string>
+    <string name="open_torrent">Atsisiųsti .torrent failą</string>
+    <string name="send_to_utorrent">Siųsti tiesiai į uTorrent</string>
+    
+    <string name="t_information">Informacija</string>
+    <string name="t_title">Pavadinimas</string>
+    <string name="t_date_added">Įdėta</string>
+    <string name="t_size">Dydis</string>
+    <string name="t_peers">Peer\'ai</string>
+    <string name="t_full_description">Aprašymas</string>
+    
+    
+    <string name="ut_test_success">Viskas OK</string>
+    <string name="ut_unexpected_response">Netikėtas atsakymas iš uTorrent. Dar kartą patikrinkite ar viskas tikrai OK.</string>
+    <string name="ut_cant_connect">Nepavyko prisijungti prie uTorrent.</string>
+    <string name="ut_send_in_progress">Siunčiame failą {filename} į jūsų uTorrent klientą.</string>
+    <string name="ut_send_success">Failas siunčiamas {label} uTorrent kliente</string>
+    
+    <string name="lm_search_results">Rezultatai pagal paeišką "{query}"</string>
+    <string name="lm_all_torrents">Visi torrentai</string>
+    <string name="lm_single_torrent">Torrento aprašymas</string>
+    <string name="lm_searching">Ieškome LinkoManijoje...</string>
+    <string name="lm_loading_more">Krauname daugiau torrentų...</string>
+    <string name="lm_fetching_details">Siunčiame išsamesnę informaciją šiam torrentui...</string>
+    <string name="lm_login_success">Sėkmingai prisijungta prie LinkoManijos.</string>
+    <string name="lm_file_downloading">Atsiunčiamas {filename} failas...</string>
+    <string name="lm_file_downloaded">Failas atsiųstas</string>
+    <string name="lm_file_downloaded_prompt">Failas atsiųstas į {path}. Ar norite jį atidaryti?</string>
+    
+    <string name="sd_card_not_avaliable">Nepasiekiama jūsų SD kortelė.</string>
+    <string name="lm_not_logged_in">Jūs esate neprisijungęs prie LinkoManijos, eikite į nustatymus ir prisijunkite.</string>
+    <string name="lm_no_connectivity">Nepavyko prisijungti prie LinkoManijos, patikrinkite interneto ryšį.</string>
+    <string name="lm_bad_password">Nepavyko prisijungti prie LinkoManijos, patikrinkite prisijungimo duomenis.</string>
+    
+    <string name="no_application_associated">Nerasta nei viena programa susieta su .torrent tipo failais.</string>
+    
+    <string name="updater_header">LM App atnaujinimas</string>
+    <string name="updater_info">Nauja apps\'o versija - {version}\n{changelog}</string>
+    <string name="updater_update">Naujinti!</string>
+    <string name="updater_cancel">Atšaukti</string>
+    <string name="updater_update_downloading">Siunčiamas atnaujinimas</string>
+    <string name="updater_activity_label">LM App atnaujinimas</string>
+    <string name="updater_failed_to_download">Nepavyko atsiųsti atnaujinimo.</string>
+</resources>

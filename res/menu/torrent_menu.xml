@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/open_torrent" android:id="@+id/download"></item>
+    <item android:title="@string/send_to_utorrent" android:id="@+id/send_to_utorrent"></item>
+</menu>

@@ -1,0 +1,42 @@
+Intro
+
+Programëlë sukurta ið dalies LM priedø kûrimo konkursui. Funkcionalumo didelio ji neturi, nes tikrai neturëjau daug laiko, bet jei bus susidomëjimas, planuoju palaikyti/vystyti ðá projektà. Visus bug'us ir feature request'us pildome èia. Screen'ai èia
+
+Apps'o galimybës
+
+    Torrentø paieðka Linkomanijoje
+    Torrentø perþiûra
+    Torrent failø atsisiuntimas á telefonà
+    Torrent failø siuntimas tiesiai á PC uTorrent klientà per WebUI!! 
+
+Kaip pasileisti?
+
+    Atsisiøskite LM App.apk failà èia
+    Ásikelkite já á savo telefonà ir áraðykite naudodamiesi pvz.: ASTRO file manager.
+    Paleidæ apps'à spauskite menu klaviðà ir eikite á nustatymus.
+    Suveskite LM prisijungimo duomenis ir spauskite Prisijungti
+    Ájunkite uTorrent WebUI savo kompiuteryje naudodamiesi ðiomis instrukcijomis.
+    Ásitikinkite, kad portas, kuriuo pasiekiamas WebUI yra teisingai forwardinamas naudodamiesi port checker'iu. Port'as yra arba jûsø Incoming connections port (UTorrent > Options > Connection), arba tas, kurá nustatëte ájunginëdami WebUI uþþymëjæ varnelæ prie Alternative listening port.
+    Áveskite uTorrent duomenis nustatymø lange. IP addresà galite suþinoti besitikrindami port'us. Username ir Password yra atitinkamai tie laukai ið WebUI nustatymo lango.
+    Iðmëginkite programà! :) 
+
+Naudojimosi instrukcijos
+
+    Paieðkos kriterijus vedame á pagrindiná paieðkos laukelá.
+    Torrentø saraðe galime ilgai laikydami pirðtà ant torrent'o pamatyti pilnà meniu arba tiesiog spausti ant dominanèio torrent'o, kad atsidaryti visà jo info.
+    Torrento perþiûroje spaudþiame meniu klaviðà ir pamatome kà galima veikti su torrent'u. 
+
+Patarimai
+
+Tiems, kurie neturi statinio ip yra du bûdai:
+
+    Patariu naudotis paprasta programële http://www.dyndns.com/. Ten galite susikurti domain'à pvz.: orang.dyndns.info ir atsisiøsta programa surið ðá adresà su jûsø IP - turësite pastovø savo kompiuterio adresà internete.
+    Jeigu naudojatës dropbox, tai atsisiuntæ ðià programëlæ galësite synchronizuoti folderá esantá jûsø telefone su dropbox'u be jûsø prisilietimo, kitaip sakant automatiðkai. Toliau programëlëje nustatymuose nustatykite .torrent failø atsiuntimo direktorijà á dropbox direktorijà. Atlikæ ðiuos þingsnius eikite á uTorrent > Options > Preferences > Directories ir prie Automatically load torrents from pasirinkite dropbox'o direktorijà, kuri nustatyta kaip atsisiuntimo direktorija jûsø telefone. Ðtai ir viskas, turëtø automatinis sync'inimas veikti atsisiunèiant torrent failus á telefonà. 
+
+Outro
+
+Happy sharing!
+
+Post Scriptum
+
+Jeigu esate prisijungæ Wi-Fi ir mëginate prieiti per iðoriná IP prie savo uTorrent kliento, to routeris kartais gali neleisti. Apëjimas - naudoti mobilø ryðá arba ávesti vidiná IP (pvz. 192.168.1.5). Koks jis yra galite suþinote savo PC komandinëje eilutëje (Run > Cmd) ávedæ omandà ipconfig 

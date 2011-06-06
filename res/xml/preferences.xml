@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+        <PreferenceCategory
+                android:title="LinkoManija.net">
+	        <EditTextPreference
+	                android:title="Prisijungimo Vardas"
+	                android:summary="Jūsų linkomanija.net prisijungimo vardas"
+	                android:defaultValue=""
+	                android:name="LM Login"
+	                android:key="lmusername" />
+	        <EditTextPreference
+	                android:title="Slaptažodis"	                
+	                android:summary="Jūsų linkomanija.net slaptažodis"
+	                android:defaultValue=""
+	                android:name="LM Password"
+	                android:password="true"
+	                android:key="lmpassword" />	                
+	        <Preference
+	                android:title="Prisijungti"
+	                android:summary=""
+	                android:key="checkLM" />
+        </PreferenceCategory>
+        <PreferenceCategory
+                android:title="uTorrent susiejimas">
+		        <EditTextPreference
+		                android:title="Host IP/Name"
+		                android:summary="Jūsų kompiuterio IP adresas. Jį sužinoti galite whatismyip.com"
+		                android:name="Host IP/Name"
+		                android:key="hostip"
+		                android:defaultValue="" />
+		        <EditTextPreference
+		                android:title="Incomming Port"
+		                android:summary="Port'as, kuriuo pasiekiamas uTorrent'o Web UI. Įsitikinkite ar jis yra forwardinamas!"
+		                android:name="Incomming Port"
+		                android:key="hostport"
+		                android:defaultValue="" />
+		        <EditTextPreference
+		                android:title="Username"
+		                android:summary="uTorrent'o Web UI vartotojo vardas."
+		                android:name="Username"
+		                android:key="hostusername"
+		                android:defaultValue="" />
+		        <EditTextPreference
+		                android:title="Password"
+		                android:summary="uTorrent'o Web UI slaptažodis."
+		                android:name="Password"
+		                android:key="hostpassword"
+		                android:password="true"
+		                android:defaultValue="" />		                		                
+		        <Preference
+		                android:title="Testuoti nustatymus"
+		                android:summary="Pamėginsime prisijungti prie jūsų uTorrent kliento."
+		                android:key="checkConnectivity" />
+        </PreferenceCategory>
+        <PreferenceCategory
+                android:title="Kiti">
+                <EditTextPreference
+		                android:title="Atsiuntimų direktorija"
+		                android:summary="Į kurį folderį bus siunčiami jūsų ,torrent failai"
+		                android:name="Atsiuntimų direktorija"
+		                android:key="downloadpath"
+		                android:defaultValue="@string/default_download_path" />	
+		        <Preference
+		        		android:title="Paaiškinimas"
+		                android:summary="Atsiuntimų direktorija nurodo kelią SD kortelėje." />
+		        <CheckBoxPreference
+		        	    android:title="Automatinis atnaujinimas"
+		                android:summary="Jei jis įjungtas, tai paleidus programą bus patikrinama ar yra atnaujinimų"
+		                android:name="Atsiuntimų direktorija"
+		                android:key="autoupdatecheck"
+		                android:defaultValue="true" /> 
+        </PreferenceCategory>
+</PreferenceScreen>

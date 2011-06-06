@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <ImageView
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+  		android:src="@drawable/logo_big"
+  		android:layout_gravity="center" 
+  		android:layout_margin="10dip"
+  		/>
+	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:padding="5dip">
+		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:weightSum="1">
+		    <EditText
+		    	android:layout_weight=".25"
+		        android:id="@+id/search"
+		        android:hint="@string/search_hint"
+		        android:layout_width="fill_parent"
+		        android:layout_height="match_parent" />
+		    <Button android:id="@+id/fetch"
+		    	android:text="@string/search_button"
+		    	android:layout_width="fill_parent"
+		    	android:layout_weight=".75"
+		    	android:layout_height="match_parent" />
+		</LinearLayout>
+		<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:gravity="center">
+		    <CheckBox
+		        android:id="@+id/search_in_descriptions"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/search_in_descriptions"/>
+		</LinearLayout>	
+	</LinearLayout>
+	<TextView  
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:text="@string/info_header"
+	    android:gravity="center"
+	    android:layout_marginTop="15dip"
+	    android:textSize="16dip" />
+	<ScrollView
+		android:scrollbarAlwaysDrawVerticalTrack="true"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent"
+	    android:layout_weight="1.0"
+	    android:layout_margin="5dip"
+	    android:padding="10dip"
+	    android:background="@drawable/border">
+	   <TextView
+	   	android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:text="@string/info" />
+	</ScrollView>
+	<Button
+		android:id="@+id/open_settings"
+		android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:visibility="gone"
+	    android:text="@string/menu_settings"  />
+</LinearLayout>

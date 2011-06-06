@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="lm_border">#AACDED</color>
+	<color name="lm_bg_blue">#E6EFF6</color>
+	<color name="lm_bg">#FFFFFF</color>
+	
+	<style name="CustomTheme" parent="android:Theme.Light">
+	    <item name="android:windowBackground">@color/lm_bg</item>
+	    <item name="android:colorBackground">@color/lm_bg</item>
+	</style>
+	
+	<style name="Header">
+		<item name="android:textSize">16dip</item>
+		<item name="android:layout_marginTop">15dip</item>
+		<item name="android:layout_marginBottom">5dip</item>
+		<item name="android:gravity">center</item>
+	</style>
+</resources>

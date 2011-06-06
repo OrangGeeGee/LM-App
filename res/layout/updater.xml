@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+      <ImageView
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+  		android:src="@drawable/logo_big"
+  		android:layout_gravity="center" 
+  		android:layout_margin="10dip"
+  		/>
+  		<TextView
+  			android:layout_width="fill_parent"
+      		android:layout_height="wrap_content"
+      		android:gravity="center"
+      		android:textSize="20dip"
+      		android:text="@string/updater_header" />
+      	<ScrollView
+      		android:layout_weight="1"
+  			android:layout_width="fill_parent"
+      		android:layout_height="fill_parent"
+      		android:padding="10dip"
+      		android:layout_margin="5dip"
+      		android:background="@drawable/border">
+	  		<TextView
+	  			android:id="@+id/updater_info"
+	  			android:layout_width="fill_parent"
+	      		android:layout_height="wrap_content" />
+     	</ScrollView> 
+      	<LinearLayout
+    		android:orientation="horizontal"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content">
+			<Button
+	  			android:id="@+id/updater_update"
+	  			android:layout_width="fill_parent"
+	      		android:layout_height="wrap_content"
+	      		android:layout_weight="1"
+				android:text="@string/updater_update" />      	
+			<Button
+	  			android:id="@+id/updater_cancel"
+	  			android:layout_width="fill_parent"
+	      		android:layout_height="wrap_content"
+	      		android:layout_weight="1"
+				android:text="@string/updater_cancel" />      	
+      	</LinearLayout>
+      	
+</LinearLayout>

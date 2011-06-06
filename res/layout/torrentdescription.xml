@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">	
+<LinearLayout
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content">
+	   <LinearLayout   
+	   		android:orientation="horizontal"
+		   	android:layout_width="fill_parent"
+		   	android:layout_height="fill_parent"
+		   	android:layout_margin="5dip">
+		   <LinearLayout   
+		   		android:orientation="vertical"
+			   	android:layout_width="wrap_content"
+			   	android:layout_height="wrap_content"
+			   	android:layout_gravity="center"
+			   	android:layout_marginRight="5dip" >
+		       	<ImageView
+			    	android:id="@+id/t_image"
+			    	android:layout_gravity="center"
+			      	android:layout_width="wrap_content"
+			  		android:layout_height="wrap_content" />
+				<ImageView
+					android:id="@+id/t_free_leech"
+					android:layout_gravity="center"
+					android:layout_marginTop="2dip"
+		            android:layout_height="wrap_content"
+		            android:layout_width="wrap_content"
+		            android:visibility="gone"
+		            android:src="@drawable/flag_green" />
+            </LinearLayout>
+		  	<TextView
+	  				android:layout_weight="1"
+	  				android:layout_width="fill_parent"
+	  				android:layout_height="wrap_content"
+	  				android:id="@+id/t_title"
+	  				android:textSize="20dip" />	
+	   </LinearLayout>
+	   	<TextView
+			style="@style/Header"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/t_information" />
+	   <TableLayout
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="wrap_content"
+	  	android:stretchColumns="1"
+	  	android:background="@drawable/border"
+	  	android:layout_margin="5dip"
+	  	android:padding="10dip">
+	  		<TableRow>
+	  			<TextView
+	  				android:layout_width="wrap_content"
+	  				android:layout_height="wrap_content"
+	  				android:text="@string/t_size"
+	  				android:padding="3dip" />
+	  			<TextView
+	  				android:layout_width="wrap_content"
+	  				android:layout_height="wrap_content"
+	  				android:padding="3dip" 
+	  				android:id="@+id/t_size"/>  					
+	  		</TableRow>
+	  		<TableRow>
+	  			<TextView
+	  				android:layout_width="wrap_content"
+	  				android:layout_height="wrap_content"
+	  				android:padding="3dip" 
+	  				android:text="@string/t_date_added" />
+	  			<TextView
+	  				android:layout_width="wrap_content"
+	  				android:layout_height="wrap_content"
+	  				android:padding="3dip" 
+	  				android:id="@+id/t_date_added" />  					
+	  		</TableRow>
+	  		<TableRow>
+	  			<TextView
+	  				android:layout_width="wrap_content"
+	  				android:layout_height="wrap_content"
+	  				android:padding="3dip" 
+	  				android:text="@string/t_peers" />
+	  			<TextView
+	  				android:layout_width="wrap_content"
+	  				android:layout_height="wrap_content"
+	  				android:padding="3dip" 
+	  				android:id="@+id/t_peers" />  					
+	  		</TableRow>
+	  </TableLayout>
+		<TextView
+			style="@style/Header"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/t_full_description" />
+		
+		<WebView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/t_full_description" /> 	  
+  
+</LinearLayout>
+</ScrollView>
