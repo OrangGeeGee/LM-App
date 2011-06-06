@@ -1,20 +1,23 @@
-Changelog:
-v0.2.1
-New Feature: Prie torrento sarase dabar rodomas "N", jei torrentas naujas
-New Feature: Pridëtas refresh mygtukas torrentø sàrağe.
-Fixed: Aprağymas su rusiğkais simboliais dabar gerai atvaizduojamas
-Fixed: Smulkiø bugø iğtaisymai
+ï»¿Changelog:
+v0.3
+New Feature: Neprisijungusiems vartotojams rodomas prisijungimo langas, nebereikia lÄ¯sti Ä¯ nustatymus, kad prisijungti prie LM.
+New Feature: GalimybÄ— atsijungti.
+New Feature: Prie torrento sÄ…raÅ¡e dabar rodomas "N", jei torrentas naujas.
+New Feature: PridÄ—tas refresh mygtukas torrentÅ³ sÄ…raÅ¡e.
+New Feature: Padarytas cache, dÄ—l kurio jeigu tik yra galimybÄ— nesiunÄiami per naujo duomenys.
+Fixed: ApraÅ¡ymas su rusiÅ¡kais simboliais dabar gerai atvaizduojamas
+Fixed: SmulkiÅ³ bugÅ³ iÅ¡taisymai
 
 v0.2
-New Feature/Fix: FreeLeech torrentai gerai atpaşástami
-New Feature: Updateris automatiğkai praneğantis ar yra atnaujinimø ğiai aplikacijai
+New Feature/Fix: FreeLeech torrentai gerai atpaÅ¾Ä¯stami
+New Feature: Updateris automatiÅ¡kai praneÅ¡antis ar yra atnaujinimÅ³ Å¡iai aplikacijai
 
 
 v0.1.1
-Fixed: Android 2.1 negalëjo net paleisti apps'o.
-New Feature: Kol neprisijunkta prie LM rodo pradiniame lange nustatymø mygtukà.
-New Feature: Galima nustatyti torrent'o atsiuntimo direktorijà
-Fixed: Pora smulkiø bugø
+Fixed: Android 2.1 negalÄ—jo net paleisti apps'o.
+New Feature: Kol neprisijunkta prie LM rodo pradiniame lange nustatymÅ³ mygtukÄ….
+New Feature: Galima nustatyti torrent'o atsiuntimo direktorijÄ…
+Fixed: Pora smulkiÅ³ bugÅ³
 
 v0.1
 Pradinis release
