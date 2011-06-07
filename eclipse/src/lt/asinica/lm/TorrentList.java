@@ -86,7 +86,7 @@ public class TorrentList extends ListActivity implements OnScrollListener {
 		    inDescriptions = extras.getBoolean("searchInDescriptions",false);
 		    title = (
 		    	query.length()>0 ?
-		    			getString(R.string.lm_search_results).replace("{query}", query) :
+		    			String.format( getString(R.string.lm_search_results), query ) :
 		    			getString(R.string.lm_all_torrents) );
 		    
             getTorrents(query, page);

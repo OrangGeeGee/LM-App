@@ -138,7 +138,7 @@ public class Torrent {
 	}
 	
 	public void open(Activity context) {
-		String str = context.getString(R.string.lm_file_downloading).replace("{filename}", getFileName());
+		String str = String.format( context.getString(R.string.lm_file_downloading), getFileName() );
 		final ProgressDialog progressDialog = ProgressDialog.show(context,    
   	          context.getString(R.string.please_wait), str, true);
 		final Activity cntxt = context;
@@ -151,7 +151,7 @@ public class Torrent {
 					final File torrent = LM.downloadFile(Torrent.this);
 					progressDialog.dismiss();
 					
-					final String msg = cntxt.getString(R.string.lm_file_downloaded_prompt).replace("{path}", torrent.getAbsolutePath());
+					final String msg = String.format( cntxt.getString(R.string.lm_file_downloaded_prompt), torrent.getAbsolutePath() );
 					
 					cntxt.runOnUiThread(new Runnable() { public void run() {					
 						new AlertDialog.Builder(cntxt)
@@ -208,7 +208,7 @@ public class Torrent {
 	    thread.start();
 	}
 	public void sendToUTorrent(Activity context) {
-		String str = context.getString(R.string.ut_send_in_progress).replace("{filename}", getFileName());
+		String str = String.format( context.getString(R.string.ut_send_in_progress), getFileName() );
 		final ProgressDialog progressDialog = ProgressDialog.show(context,    
 	  	          context.getString(R.string.please_wait), str, true);
 		final Activity cntxt = context;
@@ -222,7 +222,7 @@ public class Torrent {
 					String cookie = "login="+LM.getSecret();
 					
 					ut.addTorrent(getDownloadUrl(), cookie);
-					msg = cntxt.getString(R.string.ut_send_success).replace("{label}", ut.getLabel());
+					msg = String.format( cntxt.getString(R.string.ut_send_success), ut.getLabel() );
 				} catch (InvalidTokenException e) {
 					msg = cntxt.getString(R.string.ut_unexpected_response);
 					e.printStackTrace();
@@ -247,7 +247,6 @@ public class Torrent {
 	    
 	    Thread thread =  new Thread(null, sendTorrents, "Torrent Sender Thread");
 	    thread.start();		
-		
 	}
 	
 	public Bundle pack() {

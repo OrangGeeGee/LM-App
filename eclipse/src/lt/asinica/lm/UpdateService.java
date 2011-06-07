@@ -68,7 +68,7 @@ public class UpdateService extends Service {
     private void showNotification() {
         // In this sample, we'll use the same text for the ticker and the expanded notification
         CharSequence text = getText(R.string.new_version_avaliable);
-        CharSequence descrip = getString(R.string.new_version_more_info).replace("{version}", mIntentExtras.getString("versionName"));
+        CharSequence descrip = String.format( getString(R.string.new_version_more_info), mIntentExtras.getString("versionName") );
 
         // Set the icon, scrolling text and timestamp
         mNotification = new Notification(R.drawable.stat_sys_warning, text,
