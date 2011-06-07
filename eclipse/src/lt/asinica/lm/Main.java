@@ -3,7 +3,8 @@ package lt.asinica.lm;
 import java.io.IOException;
 
 import lt.asinica.lm.exceptions.BadPasswordException;
-import lt.asinica.lm.helpers.LM;
+import lt.asinica.lm.objects.LM;
+import lt.asinica.lm.objects.Updater;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -61,8 +62,10 @@ public class Main extends Activity {
     	
     	// display button at bottom to open prefs if uTorrent host is unspecified
     	if( !mPreferences.contains("hostip") || mPreferences.getString("hostip", "").length() == 0 ) {
+    		// make layout part with the button and text visible
+    		((View) findViewById(R.id.main_utorrent_not_set_up)).setVisibility(View.VISIBLE);
+    		
 			Button oSettings = (Button) findViewById(R.id.open_settings);
-			oSettings.setVisibility(View.VISIBLE);
 			oSettings.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 					Intent i = new Intent(Main.this, Preferences.class);

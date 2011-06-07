@@ -3,7 +3,7 @@ package lt.asinica.lm;
 import java.util.Iterator;
 import java.util.Map;
 
-import lt.asinica.lm.helpers.UTorrent;
+import lt.asinica.lm.objects.UTorrent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;

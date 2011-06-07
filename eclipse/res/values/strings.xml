@@ -14,7 +14,7 @@
     <string name="yes">Taip</string>    
     <string name="no">Ne</string>
 	
-	<string name="main_utorrent_not_set_up">Kol nesusirišite kliento su šia aplikacija, tol negalėsite naudotis visomis funkcijomis. Kad tai padaryti, spauskite Nustatymai</string>
+	<string name="main_utorrent_not_set_up">Kol nesusirišite uTorrent kliento su šia aplikacija, tol negalėsite naudotis visomis funkcijomis.</string>
 	    
     <string name="menu_settings">Nustatymai</string>
     <string name="menu_update">Patikrinti atnaujinimų</string>

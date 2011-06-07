@@ -1,6 +1,6 @@
 package lt.asinica.lm;
 
-import lt.asinica.lm.helpers.UTorrent;
+import lt.asinica.lm.objects.UTorrent;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;

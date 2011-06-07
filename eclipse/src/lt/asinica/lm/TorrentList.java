@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import lt.asinica.lm.exceptions.NotLoggedInException;
-import lt.asinica.lm.helpers.LM;
 import lt.asinica.lm.helpers.ListPack;
 import lt.asinica.lm.helpers.Torrents;
+import lt.asinica.lm.objects.Cache;
+import lt.asinica.lm.objects.LM;
+import lt.asinica.lm.objects.Torrent;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;

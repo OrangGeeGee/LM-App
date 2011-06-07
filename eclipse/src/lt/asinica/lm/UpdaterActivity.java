@@ -1,5 +1,6 @@
 package lt.asinica.lm;
 
+import lt.asinica.lm.objects.Updater;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;

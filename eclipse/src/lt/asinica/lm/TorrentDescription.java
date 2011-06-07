@@ -3,7 +3,8 @@ package lt.asinica.lm;
 import java.io.IOException;
 
 import lt.asinica.lm.exceptions.NotLoggedInException;
-import lt.asinica.lm.helpers.LM;
+import lt.asinica.lm.objects.LM;
+import lt.asinica.lm.objects.Torrent;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
