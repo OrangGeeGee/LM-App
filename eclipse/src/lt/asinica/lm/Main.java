@@ -56,8 +56,11 @@ public class Main extends Activity {
     	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
     	imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
     	
-		Button myButton = (Button) findViewById(R.id.fetch);
-    	myButton.setOnClickListener(this.btnListener);
+		Button searchButton = (Button) findViewById(R.id.fetch);
+    	searchButton.setOnClickListener(this.btnListener);
+    	
+    	Button detailedButton = (Button) findViewById(R.id.main_detailed_search);
+    	detailedButton.setOnClickListener(this.detailedListener);
     	
     	LM.getInstance().initSearch();
     	// display button at bottom to open prefs if uTorrent host is unspecified

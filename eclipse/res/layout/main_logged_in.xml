@@ -37,10 +37,18 @@
 		        android:layout_height="wrap_content"
 		        android:layout_gravity="center" 
 		        android:gravity="center" 
-		        android:text="@string/search_in_descriptions"
-		        />
+		        android:text="@string/search_in_descriptions" />
 		</LinearLayout>
+		
+	    <Button android:id="@+id/main_detailed_search"
+	    	android:text="@string/lm_detailed_search"
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:layout_gravity="center"
+	    	android:padding="10dip" />
 	</LinearLayout>
+
+
 
 	<LinearLayout
 		android:id="@+id/main_utorrent_not_set_up"

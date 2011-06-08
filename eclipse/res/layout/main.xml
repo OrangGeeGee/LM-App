@@ -8,8 +8,7 @@
       	android:layout_height="wrap_content"
   		android:src="@drawable/logo_big"
   		android:layout_gravity="center" 
-  		android:layout_margin="10dip"
-  		/>
+  		android:layout_margin="10dip" />
   	<FrameLayout
   		android:id="@+id/main_logged_in"
   		android:layout_weight="1"
