@@ -120,7 +120,7 @@ public class Updater {
 			File downloaded = null;
 	    	try {
 	    		Log.v("DEBUG", "Starting download from "+downloadURL+" to "+path+filename);
-				downloaded = LM.downloadFile(path, filename, downloadURL, null, ui);
+				downloaded = LM.getInstance().downloadFile(path, filename, downloadURL, null, ui);
 				Log.v("DEBUG", "Download finished, stopping activity");
 			} catch (Exception e) {
 				Log.e("DEBUG", "Couldn't download update file. "+e.getMessage());

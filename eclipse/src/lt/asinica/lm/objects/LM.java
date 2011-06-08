@@ -62,7 +62,7 @@ public class LM {
 		
 	}
 	
-	public static String login(String username, String password) throws BadPasswordException, IOException {
+	public String login(String username, String password) throws BadPasswordException, IOException {
 		//String secret  = prefs.getString("lmsecret", "");
 		
 		DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -99,10 +99,10 @@ public class LM {
 			throw new BadPasswordException();
 		}
 	}
-	public static Torrents search(String query, boolean inDescriptions) throws NotLoggedInException, IOException {
+	public Torrents search(String query, boolean inDescriptions) throws NotLoggedInException, IOException {
 		return search(query, inDescriptions, 0);
 	}
-	public static Torrents search(String query, boolean inDescriptions, int page) throws NotLoggedInException, IOException {
+	public Torrents search(String query, boolean inDescriptions, int page) throws NotLoggedInException, IOException {
 		String inDesc = (inDescriptions ? "&searchindesc=1" : "");
 		String url = browseUrl + "&search=" + URLEncoder.encode( query ) + "&page="+Integer.toString(page) + inDesc;
 		Document doc = performQuery(url);
@@ -123,14 +123,14 @@ public class LM {
     	return list;
 	}
 	
-	public static Torrent getMoreInfo(Torrent t) throws NotLoggedInException, IOException {
+	public Torrent getMoreInfo(Torrent t) throws NotLoggedInException, IOException {
 		String url = t.getDescriptionUrl();
 		Document doc = performQuery(url);
 		t.parseTorrentInfo(doc);
     	return t;		
 	}
 	
-	public static Document performQuery(String url) throws NotLoggedInException, IOException {
+	public Document performQuery(String url) throws NotLoggedInException, IOException {
 		Log.v("DEBUG", "LM navigating to "+url);
 		Cache cacheObj = Cache.getInstance();
 		String cache = cacheObj.fetch(url);
@@ -163,7 +163,7 @@ public class LM {
 		return doc;
 	}
 	
-	public static String getSecret() throws NotLoggedInException {
+	public String getSecret() throws NotLoggedInException {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LMApp.getDefaultContext());
 		if(prefs.getAll().containsKey("lmsecret")) {
 			return prefs.getString("lmsecret", "");
@@ -173,7 +173,7 @@ public class LM {
 	}
 	
 
-	public static File downloadFile(Torrent t)
+	public File downloadFile(Torrent t)
 			throws ExternalStorageNotAvaliableException, MalformedURLException, NotLoggedInException, IOException {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LMApp.getDefaultContext());
 		
@@ -190,7 +190,7 @@ public class LM {
 		return downloadFile(path, t.getFileName(), t.getDownloadUrl(), "login="+loginSecret, null);
 		
 	}
-	public static File downloadFile(String path, String filename, String downloadFromURL, String cookie, DownloadProgressUpdater updater)
+	public File downloadFile(String path, String filename, String downloadFromURL, String cookie, DownloadProgressUpdater updater)
 			throws ExternalStorageNotAvaliableException, MalformedURLException, NotLoggedInException, IOException {
 
 		// check if SDCard is mounted
@@ -253,7 +253,7 @@ public class LM {
         return file;
 	}
 	
-	public static void resolveIcon(ImageView icon, String category) {
+	public void resolveIcon(ImageView icon, String category) {
 		try {
 			Integer i = (Integer) R.drawable.class.getField("ic_"+category).get(null);
 			icon.setImageResource(i);

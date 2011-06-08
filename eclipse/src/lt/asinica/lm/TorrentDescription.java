@@ -54,7 +54,7 @@ public class TorrentDescription extends Activity {
 		    	public void run() {
 		    		String error = null;
 		    		try {
-		    			LM.getMoreInfo(torrent);
+		    			LM.getInstance().getMoreInfo(torrent);
 		    		} catch (NotLoggedInException e) {
 		    			error = getString(R.string.lm_not_logged_in);
 		    			e.printStackTrace();
@@ -106,7 +106,7 @@ public class TorrentDescription extends Activity {
     private void updateUI() {
     	try {
     		ImageView icon = (ImageView) findViewById(R.id.t_image);
-    		LM.resolveIcon(icon, torrent.getCategory());
+    		LM.getInstance().resolveIcon(icon, torrent.getCategory());
 	    	TextView title = (TextView) findViewById(R.id.t_title);
 	    	TextView dateAdded = (TextView) findViewById(R.id.t_date_added);
 	    	TextView size = (TextView) findViewById(R.id.t_size);

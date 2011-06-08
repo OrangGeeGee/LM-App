@@ -139,7 +139,7 @@ public class TorrentList extends ListActivity implements OnScrollListener {
 		Runnable load = new Runnable() { public void run() {
 			String error = null;
 			try {
-				lastResult = LM.search(query, inDescriptions, page);
+				lastResult = LM.getInstance().search(query, inDescriptions, page);
 				Log.i("DEBUG", "LM Torrents fetched "+lastResult.size());
 			} catch (NotLoggedInException e) {
 				error = getString(R.string.lm_not_logged_in);
@@ -172,7 +172,7 @@ public class TorrentList extends ListActivity implements OnScrollListener {
 			Torrent t = items.get(position);
 			try {
 				ImageView icon = (ImageView) v.findViewById(R.id.torrent_image);
-				LM.resolveIcon(icon, t.getCategory());
+				LM.getInstance().resolveIcon(icon, t.getCategory());
 				
 				TextView title = (TextView) v.findViewById(R.id.torrent_title);
 				TextView date = (TextView) v.findViewById(R.id.torrent_date);

@@ -148,7 +148,7 @@ public class Torrent {
 	        public void run() {
 	        	String error = null;
 				try {
-					final File torrent = LM.downloadFile(Torrent.this);
+					final File torrent = LM.getInstance().downloadFile(Torrent.this);
 					progressDialog.dismiss();
 					
 					final String msg = String.format( cntxt.getString(R.string.lm_file_downloaded_prompt), torrent.getAbsolutePath() );
@@ -219,7 +219,7 @@ public class Torrent {
 	        	String msg = null;
 				try {
 					UTorrent ut = UTorrent.getInstance();
-					String cookie = "login="+LM.getSecret();
+					String cookie = "login="+LM.getInstance().getSecret();
 					
 					ut.addTorrent(getDownloadUrl(), cookie);
 					msg = String.format( cntxt.getString(R.string.ut_send_success), ut.getLabel() );

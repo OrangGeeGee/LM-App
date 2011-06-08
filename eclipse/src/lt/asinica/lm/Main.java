@@ -109,7 +109,7 @@ public class Main extends Activity {
 			String msg = null;
 			boolean success = false;
 			try {
-				String lmsecret = LM.login(mUsername, mPassword);
+				String lmsecret = LM.getInstance().login(mUsername, mPassword);
 				Editor editor = mPreferences.edit();
 				editor.putString("lmsecret", lmsecret);
 				editor.commit();
