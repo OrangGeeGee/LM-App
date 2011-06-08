@@ -1,5 +1,6 @@
 package lt.asinica.lm;
 
+import lt.asinica.lm.objects.Cache;
 import lt.asinica.lm.objects.UTorrent;
 import android.app.Application;
 import android.content.Context;
@@ -41,6 +42,8 @@ public class LMApp extends Application {
 		String password = prefs.getString("hostpassword", "");
 		UTorrent torrent = UTorrent.getInstance();
 		torrent.setServerInfo(host, port, username, password);
+		
+		Cache.getInstance().clean();
     }
 
     public static Context getDefaultContext() {

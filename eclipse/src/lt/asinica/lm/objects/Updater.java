@@ -59,14 +59,16 @@ public class Updater {
     	checkForNewVersion();
     }
     public void checkForNewVersion() {
-    	if(Cache.getInstance().fetch("updaterCheck") == null)
-	    	if(!mCheckedForNewVersion && !mCheckingInProgress) {
-	    		mCheckingInProgress = true;
-	    		Thread t = new Thread(checker(), "Version Checker Thread");
-	    		t.start();
-	    	}
+    	if( ( Cache.getInstance().fetch("updaterCheck") == null || !mCheckedForNewVersion) && !mCheckingInProgress) {
+    		mCheckingInProgress = true;
+    		Thread t = new Thread(checker(), "Version Checker Thread");
+    		t.start();
+    	}
     }    
     private Runnable checker() { return new Runnable () { public void run() {
+    	try {
+    	wait(5000);
+    	} catch(Exception e) {}
     	HttpGet httpGet = new HttpGet(UPDATE_SERVER_URL);
     	HttpParams httpParameters = new BasicHttpParams();
     	

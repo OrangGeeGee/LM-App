@@ -1,9 +1,15 @@
 package lt.asinica.lm.objects;
 
+import java.io.BufferedReader;
+import java.io.DataInput;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,6 +43,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Environment;
@@ -46,10 +53,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class LM {
+	// constants
+	public final static String BROWSE_URL = "http://www.linkomanija.net/browse.php?incldead=0";
+	public final static String LOGIN_URL = "http://www.linkomanija.net/takelogin.php";
 	
-	private static String browseUrl = "http://www.linkomanija.net/browse.php?incldead=0";
-	private static String loginUrl = "http://www.linkomanija.net/takelogin.php";
-	
+	// singleton apratus
 	private static LM instance;
 	public static LM getInstance() {
 		if(LM.instance == null) {
@@ -57,16 +65,57 @@ public class LM {
 		}
 		return instance;
 	}
+	private LM() {}
 	
-	private LM() {
-		
+	private Categories mCategories;
+	private boolean mInitSuccessful = false;
+	private boolean mInitInProgress = false;
+	private Thread mInitThread;
+	/**
+	 * Initiation of search criteria
+	 */
+	public void initSearch() {
+		if( !mInitSuccessful && !mInitInProgress ) {
+			mInitInProgress = true;
+			Runnable init = new Runnable() {
+				public void run() {
+					mCategories = Categories.restore();
+					if(mCategories.isEmpty()) {
+						mInitSuccessful = refetchCategories();
+						mCategories.save();
+					} else {
+						mInitSuccessful = true;
+					}
+					mInitInProgress = false;
+				}
+			};
+			mInitThread = new Thread(init, "LM Category Initiation thread");
+			mInitThread.start();
+		}
+	}
+	
+	private boolean refetchCategories() {
+		String url = BROWSE_URL + "&search=randomabcnevergonefindme";
+		try {
+			Document doc = performQuery(url);
+			mCategories = Categories.parse(doc);
+			boolean notEmpty = !mCategories.isEmpty();
+			return notEmpty;
+		} catch (NotLoggedInException e) {
+			Log.e("DEBUG", "Couldn't refetch categories, because not logged in.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			Log.e("DEBUG", "Couldn't refetch categories. "+e.getMessage());
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	public String login(String username, String password) throws BadPasswordException, IOException {
 		//String secret  = prefs.getString("lmsecret", "");
 		
 		DefaultHttpClient httpClient = new DefaultHttpClient();
-		HttpPost post = new HttpPost(loginUrl);
+		HttpPost post = new HttpPost(LOGIN_URL);
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
         nameValuePairs.add(new BasicNameValuePair("username", username));
         nameValuePairs.add(new BasicNameValuePair("password", password));
@@ -104,7 +153,7 @@ public class LM {
 	}
 	public Torrents search(String query, boolean inDescriptions, int page) throws NotLoggedInException, IOException {
 		String inDesc = (inDescriptions ? "&searchindesc=1" : "");
-		String url = browseUrl + "&search=" + URLEncoder.encode( query ) + "&page="+Integer.toString(page) + inDesc;
+		String url = BROWSE_URL + "&search=" + URLEncoder.encode( query ) + "&page="+Integer.toString(page) + inDesc;
 		Document doc = performQuery(url);
     	Torrents list = new Torrents();
     	try {
@@ -146,9 +195,6 @@ public class LM {
 			  .timeout(10000)
 			  .get();
 			
-			/*byte[] binary = response.bodyAsBytes();
-			String charset = response.charset();
-			doc = Jsoup.parse( new String(binary, charset) );*/
 			if(doc.select("#username").isEmpty()) {
 				Editor editor = PreferenceManager.getDefaultSharedPreferences(LMApp.getDefaultContext()).edit();
 				editor.remove("lmsecret").commit();

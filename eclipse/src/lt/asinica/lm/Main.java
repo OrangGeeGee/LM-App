@@ -58,8 +58,7 @@ public class Main extends Activity {
 		Button myButton = (Button) findViewById(R.id.fetch);
     	myButton.setOnClickListener(this.btnListener);
     	
-    	// TODO Informacijos sekcijos perdarymas á naujas funkcijas arba prasminæ info. 
-    	
+    	LM.getInstance().initSearch();
     	// display button at bottom to open prefs if uTorrent host is unspecified
     	if( !mPreferences.contains("hostip") || mPreferences.getString("hostip", "").length() == 0 ) {
     		// make layout part with the button and text visible
