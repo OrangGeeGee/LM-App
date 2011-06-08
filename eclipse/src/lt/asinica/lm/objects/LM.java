@@ -1,15 +1,9 @@
 package lt.asinica.lm.objects;
 
-import java.io.BufferedReader;
-import java.io.DataInput;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,7 +37,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Environment;
@@ -71,8 +64,21 @@ public class LM {
 	private boolean mInitSuccessful = false;
 	private boolean mInitInProgress = false;
 	private Thread mInitThread;
+	
 	/**
-	 * Initiation of search criteria
+	 * Returns LM categories. Warning, if categories are not yet initialized it pauses the current thread.
+	 * @return
+	 */
+	
+	public Thread getInitThread() {
+		return mInitThread;
+	}
+	public Categories getCategories() {
+		return mCategories;
+	}
+	
+	/**
+	 * Initiation of search categories
 	 */
 	public void initSearch() {
 		if( !mInitSuccessful && !mInitInProgress ) {
@@ -93,7 +99,6 @@ public class LM {
 			mInitThread.start();
 		}
 	}
-	
 	private boolean refetchCategories() {
 		String url = BROWSE_URL + "&search=randomabcnevergonefindme";
 		try {
@@ -148,12 +153,8 @@ public class LM {
 			throw new BadPasswordException();
 		}
 	}
-	public Torrents search(String query, boolean inDescriptions) throws NotLoggedInException, IOException {
-		return search(query, inDescriptions, 0);
-	}
-	public Torrents search(String query, boolean inDescriptions, int page) throws NotLoggedInException, IOException {
-		String inDesc = (inDescriptions ? "&searchindesc=1" : "");
-		String url = BROWSE_URL + "&search=" + URLEncoder.encode( query ) + "&page="+Integer.toString(page) + inDesc;
+	public Torrents search(Search search, int page) throws NotLoggedInException, IOException {
+		String url = BROWSE_URL + "&" + search.toGetParameter() + "&page="+Integer.toString(page);
 		Document doc = performQuery(url);
     	Torrents list = new Torrents();
     	try {
@@ -209,6 +210,11 @@ public class LM {
 		return doc;
 	}
 	
+	/**
+	 * Used to fetch LM Cookie `login` value, so you could crawl the website
+	 * @return String with the cookie's 'login' value
+	 * @throws NotLoggedInException
+	 */
 	public String getSecret() throws NotLoggedInException {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LMApp.getDefaultContext());
 		if(prefs.getAll().containsKey("lmsecret")) {
@@ -219,6 +225,15 @@ public class LM {
 	}
 	
 
+	/**
+	 * Downloads a torrent file with all the default options
+	 * @param t Torrent type object from which all required params are fetched
+	 * @return File handle of the downloaded file
+	 * @throws ExternalStorageNotAvaliableException
+	 * @throws MalformedURLException
+	 * @throws NotLoggedInException
+	 * @throws IOException
+	 */
 	public File downloadFile(Torrent t)
 			throws ExternalStorageNotAvaliableException, MalformedURLException, NotLoggedInException, IOException {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LMApp.getDefaultContext());
@@ -299,7 +314,12 @@ public class LM {
         return file;
 	}
 	
-	public void resolveIcon(ImageView icon, String category) {
+	/**
+	 * Resolves icon image from the specified category
+	 * @param icon ImageView to be resolved
+	 * @param category String indicating the category id of the image
+	 */
+	public static void resolveIcon(ImageView icon, String category) {
 		try {
 			Integer i = (Integer) R.drawable.class.getField("ic_"+category).get(null);
 			icon.setImageResource(i);

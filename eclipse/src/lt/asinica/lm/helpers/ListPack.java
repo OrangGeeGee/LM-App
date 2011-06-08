@@ -1,30 +1,29 @@
 package lt.asinica.lm.helpers;
 
+import lt.asinica.lm.objects.Search;
+
 public class ListPack {
-	Torrents torrents;
-	String query;
-	int page;
-	String title;
-	boolean inDescriptions;
-	boolean everythingLoaded;
-	boolean loadingMore;
+	Torrents mTorrents;
+	Search mSearch;
+	int mPage;
+	String mTitle;
+	boolean mEverythingLoaded;
+	boolean mLoadingMore;
 	
-	public Torrents getTorrents() { return torrents; }
-	public String getQuery() { return query; }
-	public int getPage() { return page; }
-	public String getTitle() { return title; }
-	public boolean getInDescriptions() { return inDescriptions; }
-	public boolean getEverythingLoaded() { return everythingLoaded; }
-	public boolean getLoadingMore() { return loadingMore; }
+	public Torrents getTorrents() { return mTorrents; }
+	public Search getSearch() { return mSearch; }
+	public int getPage() { return mPage; }
+	public String getTitle() { return mTitle; }
+	public boolean getEverythingLoaded() { return mEverythingLoaded; }
+	public boolean getLoadingMore() { return mLoadingMore; }
 	
-	public ListPack(Torrents torrents, String query, int page, String title, boolean inDescriptions, boolean everythingLoaded, boolean loadingMore) {
-		this.torrents = torrents;
-		this.query = query;
-		this.page = page;
-		this.title = title;
-		this.inDescriptions = inDescriptions;
-		this.everythingLoaded = everythingLoaded;
-		this.loadingMore = loadingMore;
+	public ListPack(Torrents torrents, Search search, int page, String title, boolean everythingLoaded, boolean loadingMore) {
+		mTorrents = torrents;
+		mSearch = search;
+		mPage = page;
+		mTitle = title;
+		mEverythingLoaded = everythingLoaded;
+		mLoadingMore = loadingMore;
 	}
 	
 }

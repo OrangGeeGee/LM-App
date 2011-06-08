@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import lt.asinica.lm.exceptions.BadPasswordException;
 import lt.asinica.lm.objects.LM;
+import lt.asinica.lm.objects.Search;
 import lt.asinica.lm.objects.Updater;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -170,14 +171,12 @@ public class Main extends Activity {
         }
     }    
 
-    
-    
     public void toast(CharSequence text) {
     	Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
     
 	/**
-     * button event listener
+     * Main search button event listener
      */
     private OnClickListener btnListener = new OnClickListener() {
         public void onClick(View v) {
@@ -189,12 +188,47 @@ public class Main extends Activity {
         	imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
         	
         	CheckBox searchInDescriptions = (CheckBox) Main.this.findViewById(R.id.search_in_descriptions);
-        	//search_in_descriptions
-        	Intent intent = new Intent(getBaseContext(), TorrentList.class);
-        	intent.putExtra("searchInDescriptions", searchInDescriptions.isChecked());
-        	intent.putExtra("query", searchField.getText().toString());
-        	startActivity(intent);
+        	
+        	// init search object
+        	Search search = new Search(searchField.getText().toString(), searchInDescriptions.isChecked());
+        	startNewSearch(search);
         }
     };
+	/**
+     * Detailed search button event listener
+     */
+    private OnClickListener detailedListener = new OnClickListener() {
+        public void onClick(View v) {
+
+        	EditText searchField = (EditText) findViewById(R.id.search);
+        	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        	imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
+        	
+        	CheckBox searchInDescriptions = (CheckBox) Main.this.findViewById(R.id.search_in_descriptions);
+        	
+        	// init search object
+        	Search search = new Search(searchField.getText().toString(), searchInDescriptions.isChecked());
+        	
+        	Intent intent  = new Intent(getBaseContext(), DetailedSearchActivity.class);
+        	intent.putExtra("search", search.toBundle());
+        	intent.putExtra("view", DetailedSearchActivity.VIEW_FOR_DETAILED_SEARCH);       	
+        	startActivityForResult(intent, 1);
+        }
+    };
+        
     
+    public void startNewSearch(Search search) {
+    	startNewSearch(search.toBundle());
+    }
+    public void startNewSearch(Bundle search) {
+    	Intent intent = new Intent(getBaseContext(), TorrentList.class);
+    	intent.putExtra("search", search);
+    	startActivity(intent);
+    }
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	super.onActivityResult(requestCode, resultCode, data);
+    	startNewSearch( data.getExtras().getBundle("search") );
+    }    
 }

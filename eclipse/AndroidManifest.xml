@@ -23,14 +23,13 @@
             </intent-filter>
         </activity>
 		
-		<activity
-			android:label="@string/app_name"
-			android:name=".TorrentList"
-			/>
-		<activity
-			android:label="@string/app_name"
-			android:name=".TorrentDescription"
-			/>
+		<activity android:name=".DetailedSearchActivity"
+				  android:label="@string/app_name" />
+				  
+		<activity android:name=".TorrentList"
+				  android:label="@string/app_name" />
+		<activity android:name=".TorrentDescription"
+				  android:label="@string/app_name" />
 		
 		<activity android:name=".Preferences"
                   android:label="@string/preferences_name" />
@@ -39,6 +38,6 @@
                   android:label="@string/updater_activity_label" />                  
                   
 		<service android:name=".UpdateService"
-			android:label="@string/app_name" />
+				 android:label="@string/app_name" />
     </application>
 </manifest>

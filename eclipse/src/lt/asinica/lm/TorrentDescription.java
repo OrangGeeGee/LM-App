@@ -106,7 +106,7 @@ public class TorrentDescription extends Activity {
     private void updateUI() {
     	try {
     		ImageView icon = (ImageView) findViewById(R.id.t_image);
-    		LM.getInstance().resolveIcon(icon, torrent.getCategory());
+    		LM.resolveIcon(icon, torrent.getCategory());
 	    	TextView title = (TextView) findViewById(R.id.t_title);
 	    	TextView dateAdded = (TextView) findViewById(R.id.t_date_added);
 	    	TextView size = (TextView) findViewById(R.id.t_size);
