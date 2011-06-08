@@ -229,7 +229,7 @@ public class Torrent {
 				} catch (NotLoggedInException e) {
 					msg = cntxt.getString(R.string.lm_not_logged_in);
 					e.printStackTrace();
-				} catch (IOException e) {
+				} catch (Exception e) {
 					msg = cntxt.getString(R.string.ut_cant_connect) + " " + e.getMessage();
 					e.printStackTrace();
 				} finally {
