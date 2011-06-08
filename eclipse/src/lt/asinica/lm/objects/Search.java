@@ -4,6 +4,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import lt.asinica.lm.R;
+import android.content.Context;
 import android.os.Bundle;
 
 public class Search {
@@ -25,14 +27,24 @@ public class Search {
 	public void setOnlyFreeLeech(boolean onlyFreeLeech) { mOnlyFreeLeech = onlyFreeLeech; }
 	public void setCategories(Categories categories) { mCategories = categories; }
 	
+	// constructors
 	public Search() { }
 	public Search(String query, boolean inDescription) {
 		mQuery = query;
 		mInDescription = inDescription;
 	}
 	
+	// misc
+	public String getTitle(Context context) {
+		if(!mCategories.isEmpty()) {
+			return context.getString(R.string.lm_detailed_search);
+		} else if(mQuery.length()>0) {
+			return String.format( context.getString(R.string.lm_search_results), mQuery );
+		} else {
+			return context.getString(R.string.lm_all_torrents);
+		}
+	}
 	
-	// TODO static method realization
 	// static methods
 	public static Search parseBundle(Bundle bundle) {
 		Search s = new Search();

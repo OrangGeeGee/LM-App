@@ -85,11 +85,7 @@ public class TorrentList extends ListActivity implements OnScrollListener {
 	    } else {
 		    Bundle extras = getIntent().getExtras();
 		    mSearch = Search.parseBundle( extras.getBundle("search") );
-		    String query = mSearch.getQuery();
-		    mTitle = (
-		    	query.length()>0 ?
-		    			String.format( getString(R.string.lm_search_results), query ) :
-		    			getString(R.string.lm_all_torrents) );
+		    mTitle = mSearch.getTitle(this);
 		    
             getTorrents(mSearch, mPage);
 		    mProgressDialog = ProgressDialog.show(TorrentList.this,    
