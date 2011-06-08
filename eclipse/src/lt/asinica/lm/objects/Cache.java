@@ -6,9 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import lt.asinica.lm.LMApp;
-
 import android.util.Log;
 
 public class Cache {
@@ -22,7 +22,6 @@ public class Cache {
 		mCacheDir = LMApp.getDefaultContext().getCacheDir();
 		mCacheMap = new HashMap<String, Integer>();
 		mCacheExpiryList = new HashMap<Integer, Long>();
-		clean();
 	}
 	public void clean() {
 		File[] cached = mCacheDir.listFiles();
@@ -36,6 +35,21 @@ public class Cache {
 		mCacheMap.clear();
 		mCacheExpiryList.clear();
 		Log.i("DEBUG", "Cache cleaned. Deleted "+deleted);
+		(new Exception()).printStackTrace();
+	}
+	
+	public void cleanExpired() {
+		long time = System.currentTimeMillis();
+		Iterator<Integer> iterator = mCacheExpiryList.keySet().iterator();
+		int key;
+		while(iterator.hasNext()) {
+			key = iterator.next();
+			if(mCacheExpiryList.get(key) < time) {
+				Log.i("DEBUG", String.format("Cache %d expired. File deleted", key));
+				File cached = getFileHandle(key);
+				cached.delete();
+			}
+		}		
 	}
 	
 	private int mCounter = 0;
@@ -44,6 +58,7 @@ public class Cache {
 	private HashMap<Integer, Long> mCacheExpiryList;
 	
 	public String fetch(String identifier) {
+		cleanExpired();
 		if(mCacheMap.containsKey(identifier)) {
 			int cacheLoc = mCacheMap.get(identifier);
 			File cached = getFileHandle(cacheLoc);
@@ -51,7 +66,6 @@ public class Cache {
 				long expiry = mCacheExpiryList.get(cacheLoc);
 				if(expiry < System.currentTimeMillis()) {
 					Log.i("DEBUG", "Cache "+Integer.toString(cacheLoc)+" expired at "+String.valueOf(expiry) );
-					cached.delete();
 					mCacheMap.remove(identifier);
 					mCacheExpiryList.remove(cacheLoc);
 					return null;
@@ -69,7 +83,7 @@ public class Cache {
 	                buf = new char[1024];
 	            }
 	            reader.close();
-	            Log.v("DEBUG", "Succesfully loaded from cache "+Integer.toString(cacheLoc));
+	            Log.v("DEBUG", String.format("Succesfully loaded from cache %1$d \"%2$s\"", cacheLoc, identifier));
 	            return fileData.toString();	        	
 	        } catch(IOException e) {
 	        	Log.e("DEBUG", "Reading of cached file failed. "+e.getMessage());
@@ -87,7 +101,7 @@ public class Cache {
             fw.flush();
             fw.close();
             mCacheMap.put(identifier, mCounter);
-            Log.v("DEBUG", "Succesfully wrote to cache "+Integer.toString(mCounter));
+            Log.v("DEBUG", String.format("Succesfully wrote to cache %1$d \"%2$s\" (expires in %3$d mins)", mCounter, identifier, expiresAfterMinutes));
         	long expiresAt = System.currentTimeMillis() + 1000 * 60 * expiresAfterMinutes;
         	mCacheExpiryList.put(mCounter, expiresAt);
         	Log.v("DEBUG", "Cache expires at "+String.valueOf(expiresAt));
