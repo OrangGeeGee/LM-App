@@ -1,4 +1,11 @@
 ﻿Changelog:
+v0.4
+New Feature: Programai nustojus veikti ar iškilus kokiems nors nesklandumams, yra galimybė pranešti apie tai kūrėjui. (per meniu pradiniame lange)
+New Feature: Detalioji paieška! Yra galimybė keisti paiešką, kai ji jau atlikta (per meniu).
+Changed: Pakeista torrento aprašymo išvaizda, dabar rodoma daugiau informacijos apie torrentą (komentarų DAR nėra).
+New Feature: Padėkoti mygtukas
+Fixed: Ištaisyta krūva smulkių ir nesmulkių bugų.
+
 v0.3
 New Feature: Neprisijungusiems vartotojams rodomas prisijungimo langas, nebereikia lįsti į nustatymus, kad prisijungti prie LM.
 New Feature: Galimybė atsijungti.
