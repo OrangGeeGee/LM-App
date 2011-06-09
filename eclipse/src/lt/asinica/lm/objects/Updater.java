@@ -4,8 +4,8 @@ import java.io.File;
 
 import lt.asinica.lm.LMApp;
 import lt.asinica.lm.R;
-import lt.asinica.lm.UpdateService;
 import lt.asinica.lm.helpers.DownloadProgressUpdater;
+import lt.asinica.lm.service.UpdateService;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="t_information">Informacija</string>
+    <string name="t_full_description">Aprašymas</string>
+    <string name="t_comments">Komentarai</string>
+    
+    <string name="t_category">Kategorija</string>
+    <string name="t_size">Dydis</string>
+    <string name="t_date_added">Įdėta</string>
+    
+    <string name="t_freeleech">Freeleech</string>
+    
+    <string name="t_uploaded_by">Įdėjo</string>
+    
+    <string name="t_file_count">Failų kiekis</string>
+    <string name="t_title">Pavadinimas</string>
+    <string name="t_freeleech_description">Šiam torrentui atsisiųstų duomenų kiekis - neskaičiuojamas</string>
+    <string name="t_download_count">Atsisiuntė</string>
+    <string name="t_peers">Peer\'ai</string>
+    
+    <string name="t_thank_yous">Padėkos</string>
+    <string name="t_no_thank_yous">Kol kas dar niekas nepadėkojo.</string>
+    <string name="t_thanked">Jūs jau padėkojote!</string>
+    <string name="t_thank">Padėkoti</string>
+    <string name="t_thanks">Ačiū!</string>
+    <string name="t_thanks_failed">Nepavyko padėkoti.</string>
+</resources>

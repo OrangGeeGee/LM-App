@@ -4,7 +4,10 @@
 	<color name="lm_bg_blue">#E6EFF6</color>
 	<color name="lm_bg">#FFFFFF</color>
 	
-	<style name="CustomTheme" parent="android:Theme.Light">
+	<style name="DefaultTheme.NoTitleBar" parent="android:Theme.Light.NoTitleBar">
+	</style>
+	<style name="DefaultTheme" parent="android:Theme.Light">
+		<item name="android:tabWidgetStyle">@android:style/Widget.TabWidget</item>
 	    <item name="android:windowBackground">@color/lm_bg</item>
 	    <item name="android:colorBackground">@color/lm_bg</item>
 	</style>
@@ -15,4 +18,26 @@
 		<item name="android:layout_marginBottom">5dip</item>
 		<item name="android:gravity">center</item>
 	</style>
+	
+	<style name="WrapWrap">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+	<style name="WrapFill">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">fill_parent</item>
+	</style>
+	<style name="FillWrap">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+	<style name="FillFill">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">fill_parent</item>
+	</style>
+	
+	<style name="TableCell">
+		<item name="android:padding">5dip</item>
+	</style>
+	
 </resources>

@@ -75,7 +75,7 @@ public class UTorrent {
 		}
 	}
 	
-	public void addTorrent(String downloadUrl, String cookie) throws ClientProtocolException, InvalidTokenException, IOException {
+	public void addTorrent(String downloadUrl, String cookie) throws ClientProtocolException, InvalidTokenException, IOException, Exception {
 		//http://[USERNAME]:[PASSWORD]@[IP]:[PORT]/gui/
 		String suffix = "?action=add-url&"+ "%$1s" +"&s="+ URLEncoder.encode(downloadUrl) +":COOKIE:"+cookie;
 		request(suffix);
@@ -92,15 +92,11 @@ public class UTorrent {
 				Log.e("DEBUG", "Exception "+e.getClass().toString()+". "+e.getMessage());
 				answer = context.getString(R.string.ut_unexpected_response);
 				e.printStackTrace();					
-			} catch (ClientProtocolException e) {
+			} catch (Exception e) {
 				Log.e("DEBUG", "Exception "+e.getClass().toString()+". "+e.getMessage());
 				answer = context.getString(R.string.ut_cant_connect)+" "+e.getMessage();
 				e.printStackTrace();					
-			} catch (IOException e) {
-				Log.e("DEBUG", "Exception "+e.getClass().toString()+". "+e.getMessage());
-				answer = context.getString(R.string.ut_cant_connect)+" "+e.getMessage();
-				e.printStackTrace();
-			}		
+			}
 			
 			if(answer!=null) {
 				final String tmp = answer;
@@ -111,13 +107,13 @@ public class UTorrent {
 		} };
 	}
 	
-	public boolean test() throws ClientProtocolException, InvalidTokenException, IOException {
+	public boolean test() throws ClientProtocolException, InvalidTokenException, IOException, Exception {
 		String resp = request("?action=getsettings&"+ "%$1s");
 		if(resp.length()>0) return true;
 		else return false;
 	}
 	
-	private void fetchToken() throws InvalidTokenException, ClientProtocolException, IOException {
+	private void fetchToken() throws InvalidTokenException, ClientProtocolException, IOException, Exception {
 		// if token not yet fetched
 		if(token==null || infoChanged) {
 			
@@ -132,11 +128,11 @@ public class UTorrent {
 			}
 		}
 	}
-	private String request(String urlSuffix) throws ClientProtocolException, InvalidTokenException, IOException {
+	private String request(String urlSuffix) throws ClientProtocolException, InvalidTokenException, IOException, Exception {
 		fetchToken();
 		return rawRequest(urlSuffix);
 	}
-	private String rawRequest(String urlSuffix) throws ClientProtocolException, IOException {
+	private String rawRequest(String urlSuffix) throws ClientProtocolException, IOException, Exception {
 		String tokenUrl = protocol + "://" + host + ":" + Integer.toString(port) + basePath + String.format(urlSuffix, "token="+token);
 		HttpGet httpGet = new HttpGet(tokenUrl);
 		HttpResponse response = httpClient.execute(httpGet);

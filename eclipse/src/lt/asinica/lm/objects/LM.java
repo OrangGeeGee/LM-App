@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,11 +31,14 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
+import org.jsoup.Connection.Method;
+import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Environment;
@@ -44,11 +46,15 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class LM {
 	// constants
-	public final static String BROWSE_URL = "http://www.linkomanija.net/browse.php?incldead=0";
-	public final static String LOGIN_URL = "http://www.linkomanija.net/takelogin.php";
+	public final static String BASE_URL = "http://www.linkomanija.net"; //  
+	public final static String BROWSE_URL = BASE_URL+"/browse.php?incldead=0";
+	public final static String THANK_URL = BASE_URL+"/ajax/thank.php";
+	public final static String LOGIN_URL = BASE_URL+"/takelogin.php";
+	
 	
 	// singleton apratus
 	private static LM instance;
@@ -61,6 +67,7 @@ public class LM {
 	private LM() {}
 	
 	private Categories mCategories;
+	private ArrayList<Category> mCategoriesList;
 	private boolean mInitSuccessful = false;
 	private boolean mInitInProgress = false;
 	private Thread mInitThread;
@@ -75,6 +82,9 @@ public class LM {
 	}
 	public Categories getCategories() {
 		return mCategories;
+	}
+	public ArrayList<Category> getCategoriesList() {
+		return mCategoriesList;
 	}
 	
 	/**
@@ -92,6 +102,10 @@ public class LM {
 					} else {
 						mInitSuccessful = true;
 					}
+					if(!mCategories.isEmpty()) {
+						mCategoriesList = mCategories.toArrayList();
+					}
+						
 					mInitInProgress = false;
 				}
 			};
@@ -171,6 +185,40 @@ public class LM {
     		e.printStackTrace();
     	}
     	return list;
+	}
+	
+	/**
+	 * Creates it's own thread. Notifies if something went wrong
+	 */
+	public void thank(final Torrent t, final Activity context) {
+		Runnable sayThanks = new Runnable() { public void run() {
+			String url = THANK_URL;
+			String id = t.getId();
+			String error = null;
+			try {
+				Response resp = Jsoup.connect(url)
+				  .cookie("login", getSecret())
+				  .method(Method.POST)
+				  .data("id", id)
+				  .execute();
+				Log.v("DEBUG", "Said thanks to "+id+", URL "+url+", response "+resp.body());
+			} catch (Exception e) {
+				error = context.getString(R.string.t_thanks_failed) + " " + e.getMessage();
+				Log.e("DEBUG", error);
+				e.printStackTrace();
+			}
+			if(error != null) {
+				final String err = error;
+				context.runOnUiThread(new Runnable() {
+					public void run() {
+						Toast.makeText(context, err, Toast.LENGTH_SHORT).show();
+					}
+				});
+			}
+		}};
+		Thread thanker = new Thread(sayThanks, "Thank you Thread");
+		thanker.start();
+		Cache.getInstance().cleanSingle(t.getDescriptionUrl());
 	}
 	
 	public Torrent getMoreInfo(Torrent t) throws NotLoggedInException, IOException {

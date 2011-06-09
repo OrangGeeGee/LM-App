@@ -20,11 +20,11 @@
 			    android:weightSum="1">
 			    <EditText
 			    	android:layout_weight=".25"
-			        android:id="@+id/search"
+			        android:id="@+id/main_search"
 			        android:hint="@string/search_hint"
 			        android:layout_width="fill_parent"
 			        android:layout_height="match_parent" />
-			    <Button android:id="@+id/fetch"
+			    <Button android:id="@+id/main_fetch"
 			    	android:text="@string/search_button"
 			    	android:layout_width="fill_parent"
 			    	android:layout_weight=".75"

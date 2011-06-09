@@ -35,7 +35,6 @@ public class Cache {
 		mCacheMap.clear();
 		mCacheExpiryList.clear();
 		Log.i("DEBUG", "Cache cleaned. Deleted "+deleted);
-		(new Exception()).printStackTrace();
 	}
 	
 	public void cleanExpired() {
@@ -50,6 +49,10 @@ public class Cache {
 				cached.delete();
 			}
 		}		
+	}
+	public void cleanSingle(String identifier) {
+		int cacheLoc = mCacheMap.get(identifier);
+		mCacheExpiryList.put(cacheLoc, System.currentTimeMillis());
 	}
 	
 	private int mCounter = 0;

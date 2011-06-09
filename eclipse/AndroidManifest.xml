@@ -5,16 +5,19 @@
       android:versionName="0.3">
 <uses-sdk
 	android:targetSdkVersion="8"
-	android:minSdkVersion="3"
+	android:minSdkVersion="5"
 	android:maxSdkVersion="12" />
 <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 
     <application android:icon="@drawable/icon"
-    	android:name=".LMApp"
+    	android:name="lt.asinica.lm.LMApp"
     	android:label="@string/app_name"
-    	android:theme="@android:style/Theme.Light">
-        <activity android:name=".Main"
+    	android:theme="@style/DefaultTheme">
+    	
+    	<!-- MAIN -->
+        <activity android:name=".activity.Main"
+        		  android:theme="@style/DefaultTheme.NoTitleBar"
         		  android:windowSoftInputMode="stateHidden"
                   android:label="@string/app_name">
             <intent-filter>
@@ -23,21 +26,35 @@
             </intent-filter>
         </activity>
 		
-		<activity android:name=".DetailedSearchActivity"
+		
+		<activity android:name=".activity.DetailedSearchActivity"
 				  android:label="@string/app_name" />
 				  
-		<activity android:name=".TorrentList"
+		<activity android:name=".activity.TorrentList"
 				  android:label="@string/app_name" />
-		<activity android:name=".TorrentDescription"
+				  
+		<activity android:name=".activity.TorrentDescriptionTabs"
+				  android:theme="@style/DefaultTheme.NoTitleBar" 
 				  android:label="@string/app_name" />
-		
-		<activity android:name=".Preferences"
+				  
+		<activity android:name=".activity.TorrentDescription" 
+				  android:label="@string/app_name" />
+				  
+		<activity android:name=".activity.TorrentInfo" 
+				  android:label="@string/app_name" />
+				  
+		<activity android:name=".activity.TorrentComments"
+				  android:label="@string/app_name" />	
+				  			  
+		<activity android:name=".activity.Preferences"
                   android:label="@string/preferences_name" />
                   
-		<activity android:name=".UpdaterActivity"
-                  android:label="@string/updater_activity_label" />                  
+                
                   
-		<service android:name=".UpdateService"
+        <!-- UPDATER -->
+		<service android:name="service.UpdateService"
 				 android:label="@string/app_name" />
+		<activity android:name="activity.UpdaterActivity"
+                  android:label="@string/updater_activity_label" />  
     </application>
 </manifest>

@@ -7,7 +7,7 @@ import java.net.URI;
 import java.util.List;
 
 import lt.asinica.lm.R;
-import lt.asinica.lm.TorrentDescription;
+import lt.asinica.lm.activity.TorrentDescriptionTabs;
 import lt.asinica.lm.exceptions.ExternalStorageNotAvaliableException;
 import lt.asinica.lm.exceptions.InvalidTokenException;
 import lt.asinica.lm.exceptions.NotLoggedInException;
@@ -56,6 +56,7 @@ public class Torrent {
 	public boolean isNew() { return mInfo.getBoolean("new"); }
 	public String getDescriptionUrl() { return baseUrl+mInfo.getString("descriptionUrl"); }
 	public String getCategory() { return mInfo.getString("category"); }
+	public String getCategoryName() { return LM.getInstance().getCategories().get(Integer.parseInt( mInfo.getString("category") )).getName(); }
 	public String getCategoryUrl() { return baseUrl+mInfo.getString("categoryUrl"); }
 	public String getDownloadUrl() { return baseUrl+mInfo.getString("downloadUrl"); }
 	public String getDateAdded() { return mInfo.getString("dateAdded"); }
@@ -63,9 +64,14 @@ public class Torrent {
 	public String getSeeders() { return mInfo.getString("seeders"); }
 	public String getLeechers() { return mInfo.getString("leechers"); }
 	public String getFullDescription() { return mInfo.getString("fullDescription"); }
+	public String getUploadedBy() { return mInfo.getString("uploadedBy"); }
+	public String getFileCount() { return mInfo.getString("fileCount"); }
+	public String getThankYous() { return mInfo.getString("thankYous"); }
+	public boolean getThanked() { return mInfo.getBoolean("thanked"); }
 	
-	public Torrent() {
-		
+	public Torrent() { }
+	public Torrent(Bundle informationBundle) {
+		mInfo = informationBundle;
 	}
 	public Torrent(Element row) {
 		parseTableRow(row);
@@ -120,20 +126,33 @@ public class Torrent {
 	}
 	public void parseTorrentInfo(Document doc) {
     	try {
-	    	Elements rows = doc.select("#content table tr");
+    		Elements rows = doc.select("#content table:not(.main) > tr");
 	    	// apraðymo tr > antras td
-	    	int row = isFreeLeech() ? 3 : 2;
-	    	Element descrip = rows.get(row).select("td").get(1);
-	    	mInfo.putString("fullDescription", descrip.html());
-    	} catch (NullPointerException e) {
+	    	int freeLeechOffset = isFreeLeech() ? 1 : 0; 
+	    	int nfoOffset = rows.get(3 + freeLeechOffset).select("td").get(0).text().contains("NFO") ? 1 : 0;
+	    	
+	    	mInfo.putString("fullDescription", rows.get(2 + freeLeechOffset).select("td").get(1).html());
+	    	// uploaded by tr right after descrip
+	    	Element row = rows.get(3 + freeLeechOffset + nfoOffset);
+	    	Elements elems = row.select("td");
+	    	Element cell = elems.get(1);
+	    	mInfo.putString("uploadedBy", cell.text());
+	    	// file count goes after uploaded by
+	    	mInfo.putString("fileCount", rows.get(4 + freeLeechOffset + nfoOffset).select("td").get(1).ownText());
+	    	// thank yous in the bottom
+	    	mInfo.putString("thankYous", rows.select("#padekos").get(0).text());
+	    	mInfo.putBoolean("thanked", rows.select("#padekoti input").size() == 0);
+	    			//get(6 + freeLeechOffset).select("td").get(1).ownText());
+	    	// TODO find uploaded_by, file_count, download_count, thank_yous 
+    	} catch (Exception e) {
     		Log.e("DEBUG", "Can not parse document to torrent info. "+e.getMessage());
     		e.printStackTrace();
     	}		
 	}
 	
 	public void view(Activity context) {
-		Intent intent = new Intent(context, TorrentDescription.class);
-		intent.putExtra("torrent", pack());
+		Intent intent = new Intent(context, TorrentDescriptionTabs.class);
+		intent.putExtra("torrent", toBundle());
 		context.startActivity(intent);
 	}
 	
@@ -249,11 +268,7 @@ public class Torrent {
 	    thread.start();		
 	}
 	
-	public Bundle pack() {
+	public Bundle toBundle() {
 		return mInfo;
-	}
-	
-	public void unpack(Bundle pack) {
-		mInfo = pack;
 	}
 }

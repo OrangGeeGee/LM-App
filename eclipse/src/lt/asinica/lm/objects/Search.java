@@ -13,19 +13,19 @@ public class Search {
 	private String mQuery = "";
 	private boolean mInDescription = false;
 	private boolean mOnlyFreeLeech = false;
-	private Categories mCategories = new Categories();
+	private ArrayList<Integer> mCategoriesList = new ArrayList<Integer>();
 	
 	// getters
 	public String getQuery() { return mQuery; }
 	public boolean getInDescription() { return mInDescription; }
 	public boolean getOnlyFreeLeech() { return mOnlyFreeLeech; }
-	public Categories getCategories() { return mCategories; }
+	public ArrayList<Integer> getCategoriesList() { return mCategoriesList; }
 	
 	// setters
 	public void setQuery(String query) { mQuery = query; }
 	public void setInDescription(boolean inDescription) { mInDescription = inDescription; }
 	public void setOnlyFreeLeech(boolean onlyFreeLeech) { mOnlyFreeLeech = onlyFreeLeech; }
-	public void setCategories(Categories categories) { mCategories = categories; }
+	public void setCategoriesList(ArrayList<Integer> categories) { mCategoriesList = categories; }
 	
 	// constructors
 	public Search() { }
@@ -35,10 +35,20 @@ public class Search {
 	}
 	
 	// misc
+	public boolean hasCategory(Integer id) {
+		return mCategoriesList.contains(id);
+	}
+	public void addCategory(Integer id) {
+		mCategoriesList.add(id);
+	}
+	public void removeCategory(Integer id) {
+		mCategoriesList.remove(id);		
+	}
+	
 	public String getTitle(Context context) {
-		if(!mCategories.isEmpty()) {
+		if(!mCategoriesList.isEmpty()) {
 			return context.getString(R.string.lm_detailed_search);
-		} else if(mQuery.length()>0) {
+		} else if(mQuery!=null && mQuery.length()>0) {
 			return String.format( context.getString(R.string.lm_search_results), mQuery );
 		} else {
 			return context.getString(R.string.lm_all_torrents);
@@ -51,15 +61,7 @@ public class Search {
 		s.setQuery( bundle.getString("query") );
 		s.setInDescription( bundle.getBoolean("inDescription") );
 		s.setOnlyFreeLeech( bundle.getBoolean("onlyFreeLeech") );
-		
-		Categories all = LM.getInstance().getCategories();
-		Categories current = s.getCategories();
-		Iterator<Integer> iter = bundle.getIntegerArrayList("categories").iterator();
-		int currKey;
-		while(iter.hasNext()) {
-			currKey = iter.next();
-			current.put(currKey, all.get(currKey));
-		}
+		s.setCategoriesList( bundle.getIntegerArrayList("categories") );
 		return s;
 	}
 	public Bundle toBundle() {
@@ -67,15 +69,23 @@ public class Search {
 		bundle.putString("query", mQuery);
 		bundle.putBoolean("inDescription", mInDescription);
 		bundle.putBoolean("onlyFreeLeech", mOnlyFreeLeech);
-		
-		// TODO Check if this val is okay
-		ArrayList<Integer> array = new ArrayList<Integer>(mCategories.keySet());
-		bundle.putIntegerArrayList("categories", array);
-		
+		bundle.putIntegerArrayList("categories", mCategoriesList);
 		return bundle;
 	}
 	public String toGetParameter() {
-		String result = "search=" + URLEncoder.encode( mQuery ) + (mInDescription ? "&searchindesc=1" : "");
+		String result = "search=";
+		if(mQuery!=null)
+			result += URLEncoder.encode( mQuery );
+		if(mInDescription)
+			result += "&searchindesc=1";
+		if(mOnlyFreeLeech)
+			result += "&freeleech=1";
+		
+		Categories allCats = LM.getInstance().getCategories();
+		Iterator<Integer> iter = mCategoriesList.iterator();
+		while(iter.hasNext())
+			result += "&"+allCats.get(iter.next()).getQueryParam();
+		
 		return result;
 	}
 }

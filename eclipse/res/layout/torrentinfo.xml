@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/FillFill">	
+<LinearLayout
+  android:orientation="vertical"
+  style="@style/FillWrap">
+	   <LinearLayout   
+	   		android:orientation="horizontal"
+		   	style="@style/FillFill"
+		   	android:layout_margin="5dip">
+	       	<ImageView
+		    	android:id="@+id/t_image"
+		    	android:layout_gravity="center"
+		      	style="@style/WrapWrap"
+		  		android:paddingRight="5dip" />
+		  	<TextView
+	  				android:layout_weight="1"
+	  				style="@style/FillWrap"
+	  				android:id="@+id/t_title"
+	  				android:textSize="20dip" />	
+	   </LinearLayout>
+	   <TableLayout
+	  	style="@style/FillWrap"
+	  	android:stretchColumns="1"
+	  	android:padding="10dip">
+	  	<!-- 
+	  	android:background="@drawable/border"
+	  	android:layout_margin="5dip"	  	
+	  	 -->
+	  		<TableRow>
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:text="@string/t_category" />
+	  			<TextView
+	  				android:layout_column="1"
+	  				style="@style/TableCell"
+	  				android:id="@+id/t_category" />  					
+	  		</TableRow>	  	
+	  		<TableRow>
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:text="@string/t_size" />
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:id="@+id/t_size" />  					
+	  		</TableRow>
+	  		<TableRow>
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:text="@string/t_date_added" />
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:id="@+id/t_date_added" />  					
+	  		</TableRow>	  		
+	  		
+	  		<TableRow
+					android:id="@+id/t_free_leech"
+		            android:visibility="gone">
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:text="@string/t_freeleech" />
+	  			<ImageView
+	  				android:gravity="left"
+	  				android:layout_gravity="left"
+	  				android:src="@drawable/flag_green" />
+	  			<!-- <TextView
+	  				style="@style/TableCell"
+	  				android:text="@string/t_freeleech_description" /> -->  					
+	  		</TableRow>
+
+	  		<TableRow>
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:text="@string/t_uploaded_by" />
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:id="@+id/t_uploaded_by" />
+	  		</TableRow>
+
+	  		<TableRow>
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:text="@string/t_file_count" />
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:id="@+id/t_file_count" />  					
+	  		</TableRow>
+
+	  		<!-- <TableRow>
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:text="@string/t_download_count" />
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:id="@+id/t_download_count" />  					
+	  		</TableRow>-->
+
+	  		
+	  		<TableRow>
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:text="@string/t_peers" />
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:id="@+id/t_peers" />  					
+	  		</TableRow>
+
+	  		<TableRow>
+	  			<TextView
+	  				style="@style/TableCell"
+	  				android:text="@string/t_thank_yous" />
+	  			<LinearLayout
+	  				style="@style/TableCell"
+	  				android:orientation="vertical">
+		  			<Button
+		  				style="@style/WrapWrap"
+		  				android:text="@string/t_thank"
+		  				android:visibility="gone"
+		  				android:id="@+id/t_thank" />
+		  			<TextView
+		  				style="@style/WrapWrap"
+		  				android:id="@+id/t_thanked"
+		  				android:visibility="gone"
+		  				android:text="@string/t_thanked" />  					
+	  			</LinearLayout>
+	  		</TableRow>
+ 			<TextView
+	 			android:layout_height="wrap_content"
+ 				style="@style/TableCell"
+ 				android:id="@+id/t_thank_yous"
+ 				android:visibility="gone"
+ 				android:text="@string/t_thank_yous" />	  
+	  </TableLayout>
+</LinearLayout>
+</ScrollView>

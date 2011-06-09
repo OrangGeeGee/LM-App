@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -23,12 +24,23 @@ import android.content.Context;
 import android.util.Log;
 
 public class Categories extends HashMap<Integer, Category> {
+	private static final long serialVersionUID = 4115565855651893715L;
+	
 	public final static String CATEGORIES_FILENAME = "categories";
 	
 	public Categories() {
 		super();
 	}
 	
+	
+	public ArrayList<Category> toArrayList() {
+		ArrayList<Category> categories = new ArrayList<Category>();
+		Set< Entry<Integer, Category> > entries = entrySet();
+		Iterator< Entry<Integer, Category> > iter = entries.iterator();
+		while(iter.hasNext())
+			categories.add(iter.next().getValue());
+		return categories;
+	}
 	public void save() {
 		Context context = LMApp.getDefaultContext();
 		try {
@@ -52,9 +64,11 @@ public class Categories extends HashMap<Integer, Category> {
 		}
 	}
 	
+	
+	// static methods
 	public static Categories parse(Document doc) {
 		Categories cats = new Categories();
-		
+		// TODO sort categories in a better way
 		Elements tableCells = doc.select("td.browsecat");
 		Iterator<Element> iterator = tableCells.iterator();
 		Category cat;

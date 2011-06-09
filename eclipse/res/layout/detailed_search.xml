@@ -1,7 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  
-</LinearLayout>
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+	<LinearLayout
+	  android:orientation="vertical"
+	  android:layout_width="fill_parent"
+	  android:layout_height="fill_parent"
+	  android:padding="5dip">
+	    <EditText
+	        android:id="@+id/ds_query"
+	        android:hint="@string/ds_keyword"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" />	  	
+		<LinearLayout
+			android:orientation="horizontal"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center"
+		    android:gravity="center">
+		    <CheckBox
+		        android:id="@+id/ds_in_descriptions"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center"
+		        android:gravity="center"
+		        android:text="@string/search_in_descriptions" />
+		    <CheckBox
+		        android:id="@+id/ds_only_free_leech"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center"
+		        android:gravity="center"
+		        android:text="@string/search_only_free_leech" />		        
+		</LinearLayout>
+		
+	    <TextView
+	    	android:text="@string/ds_categories"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:gravity="center"
+	    	android:padding="6dip"
+	    	android:textSize="20dip" />
+	    <GridView
+		    android:id="@+id/ds_category_grid"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="fill_parent"
+			android:layout_weight="1"		    
+		    android:numColumns="auto_fit"
+		    android:columnWidth="70dip" 
+		    android:stretchMode="spacingWidth"
+		    android:verticalSpacing="5dip"
+		    android:horizontalSpacing="5dip"
+		    android:gravity="center" />
+		    <!--
+		    
+		    -->	
+	    	
+		<LinearLayout
+			android:id="@+id/main_utorrent_not_set_up"
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" >
+			<!--  android:layout_alignParentBottom="true" -->
+			
+			<Button
+				android:id="@+id/ds_search"
+				android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content"
+				android:layout_weight="1"
+			    android:text="@string/ds_search"  />
+			<Button
+				android:id="@+id/ds_cancel"
+				android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content"
+			    android:layout_weight="1"
+			    android:text="@string/cancel"  />		    
+	    </LinearLayout>
+	</LinearLayout>
+
+
+
+
+</RelativeLayout>

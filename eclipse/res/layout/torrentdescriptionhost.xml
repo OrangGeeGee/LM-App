@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabHost
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    style="@style/FillFill">
+    <LinearLayout
+        android:orientation="vertical"
+        style="@style/FillFill"
+        android:background="#000000">
+        <TabWidget
+            android:id="@android:id/tabs"
+            style="@style/FillWrap" />
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            style="@style/FillFill"
+            android:padding="5dip"
+            android:background="@color/lm_bg" />
+    </LinearLayout> 
+</TabHost>
