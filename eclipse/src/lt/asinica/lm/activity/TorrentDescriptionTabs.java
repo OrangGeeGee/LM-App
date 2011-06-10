@@ -29,7 +29,12 @@ public class TorrentDescriptionTabs extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    mTabHost = getTabHost();  // The activity TabHost
-
+	    mTabHost.addTab(
+	    	mTabHost
+	    		.newTabSpec("empty")
+	    		.setIndicator(".")
+	    		.setContent(new Intent(this, Dummy.class)));
+	    
 	    Bundle torrentBundle = getIntent().getExtras().getBundle("torrent");
 	    mTorrent = new Torrent(torrentBundle);
 	    Log.v("DEBUG", "Loading torrent "+mTorrent.getId());
@@ -106,6 +111,7 @@ public class TorrentDescriptionTabs extends TabActivity {
     		
     	    Resources res = getResources(); // Resource object to get Drawables
     	    TabHost tabHost = mTabHost;
+    	    tabHost.clearAllTabs();
     	    TabHost.TabSpec spec;  // Resusable TabSpec for each tab
     	    Intent intent;  // Reusable Intent for each tab
     	    Bundle torrentBundle = mTorrent.toBundle(); // Information bundle

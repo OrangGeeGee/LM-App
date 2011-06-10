@@ -14,7 +14,7 @@ $response = array(
 	"versionName"=>$lastVer["versionName"],
 	"downloadUrl"=>$downloadUrl,
 	"title"=>$lastVer["name"],
-	"changelog"=>$lastVer["changelog"]
+	"changelog"=>str_replace ( "\r\n", "\n", $lastVer["changelog"] )
 );
 
 echo json_encode($response);

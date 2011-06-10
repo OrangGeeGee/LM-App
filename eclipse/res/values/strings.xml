@@ -63,7 +63,7 @@
     <string name="lm_logging_in">Prisijunginėjama prie LinkoManijos...</string>
     
     <string name="updater_header">LM App atnaujinimas</string>
-    <string name="updater_info">Nauja apps\'o versija - %1$s\n%2$s</string>
+    <string name="updater_info">Nauja apps\'o versija - %s\n</string>
     <string name="updater_update">Naujinti!</string>
     <string name="updater_update_downloading">Siunčiamas atnaujinimas</string>
     <string name="updater_activity_label">LM App atnaujinimas</string>

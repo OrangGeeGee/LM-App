@@ -1,5 +1,8 @@
 package lt.asinica.lm.activity;
 
+import java.lang.reflect.Method;
+import java.text.Format;
+
 import lt.asinica.lm.R;
 import lt.asinica.lm.objects.Updater;
 import lt.asinica.lm.service.UpdateService;
@@ -7,11 +10,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class UpdaterActivity extends Activity {
 	private Bundle mUpdateDetails;
@@ -32,10 +37,10 @@ public class UpdaterActivity extends Activity {
 		mUpdateDetails = extras;
 		
 		TextView info = (TextView) findViewById(R.id.updater_info);//
-		String html = getString(R.string.updater_info).replace("{version}", extras.getString("versionName"));
-		html = html.replace("{changelog}", extras.getString("changelog"));
-		info.setText(html);
-		
+		String changelog = extras.getString("changelog");
+		String infoStr = String.format( getString(R.string.updater_info), extras.getString("versionName")) + changelog;
+		info.setText(infoStr);
+		 
 		Button cancel = (Button) findViewById(R.id.updater_cancel);
 		cancel.setOnClickListener(mListenToCancel);
 		
@@ -48,7 +53,18 @@ public class UpdaterActivity extends Activity {
 	} };
 	
 	private OnClickListener mListenToUpdate = new OnClickListener() { public void onClick(View v) {
-		String path = getExternalCacheDir().getAbsolutePath()+"/";
+		String path;
+		try {
+			// API levels 8 and higher
+			Method m = UpdaterActivity.class.getMethod("getExternalCacheDir");
+			path = getExternalCacheDir().getAbsolutePath()+"/";
+		} catch(NoSuchMethodException e) {
+			// API levels 7 and lower
+			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/lt.asinica.lm/cache/";
+		}
+		
+		Toast.makeText(UpdaterActivity.this, "Siunèiama á folderá  "+path, Toast.LENGTH_LONG).show();
+		
 		
 		String url = mUpdateDetails.getString("downloadUrl");
 		

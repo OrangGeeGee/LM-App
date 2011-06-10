@@ -56,6 +56,7 @@ public class Updater {
     
     public void forceCheck() {
     	mCheckedForNewVersion = false;
+    	Cache.getInstance().cleanSingle("updaterCheck");
     	checkForNewVersion();
     }
     public void checkForNewVersion() {

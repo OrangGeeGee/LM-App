@@ -1,4 +1,9 @@
-﻿Changelog:
+﻿Šis update yra HOTFIX, ištaisomas updater'io bug'as ir 2.1 versijos force close'as mėginant paleisti update.
+Changelog:
+v0.4.1
+Fixed: Atnaujinimas buvo biški pagedęs
+Fixed: 2.1 force close atnaujinant ištaisyta.
+
 v0.4
 New Feature: Programai nustojus veikti ar iškilus kokiems nors nesklandumams, yra galimybė pranešti apie tai kūrėjui. (per meniu pradiniame lange)
 New Feature: Detalioji paieška! Yra galimybė keisti paiešką, kai ji jau atlikta (per meniu).
@@ -18,7 +23,6 @@ Fixed: Smulkių bugų ištaisymai
 v0.2
 New Feature/Fix: FreeLeech torrentai gerai atpažįstami
 New Feature: Updateris automatiškai pranešantis ar yra atnaujinimų šiai aplikacijai
-
 
 v0.1.1
 Fixed: Android 2.1 negalėjo net paleisti apps'o.
