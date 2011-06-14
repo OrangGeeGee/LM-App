@@ -25,11 +25,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -66,6 +68,18 @@ public class Main extends Activity {
     	EditText searchField = (EditText) findViewById(R.id.main_search);
     	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
     	imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
+    	searchField.setOnKeyListener(new OnKeyListener() {
+    	    public boolean onKey(View v, int keyCode, KeyEvent event) {
+    	        // If the event is a key-down event on the "enter" button
+    	        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+    	            (keyCode == KeyEvent.KEYCODE_ENTER)) {
+    	          // Perform action on key press
+    	          submit();
+    	          return true;
+    	        }
+    	        return false;
+    	    }
+    	});
     	
 		Button searchButton = (Button) findViewById(R.id.main_fetch);
     	searchButton.setOnClickListener(this.btnListener);
@@ -192,6 +206,17 @@ public class Main extends Activity {
     	Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
     
+    public void submit() {
+    	EditText searchField = (EditText) findViewById(R.id.main_search);
+    	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    	imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
+    	
+    	CheckBox searchInDescriptions = (CheckBox) Main.this.findViewById(R.id.search_in_descriptions);
+    	
+    	// init search object
+    	Search search = new Search(searchField.getText().toString(), searchInDescriptions.isChecked());
+    	startNewSearch(search);
+    }
 	/**
      * Main search button event listener
      */
@@ -199,16 +224,7 @@ public class Main extends Activity {
         public void onClick(View v) {
         	//httpget.setHeader("Cookie", "login=OTI3NDQ6TXpFMVptVXdaamxtWTJZM1pHTTNaV1ZpTURsbVpXVTNNekJsTUdGalpUaz0%3D;");
 				//toast(e.getMessage());
-        	
-        	EditText searchField = (EditText) findViewById(R.id.main_search);
-        	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        	imm.hideSoftInputFromWindow(searchField.getWindowToken(), 0);
-        	
-        	CheckBox searchInDescriptions = (CheckBox) Main.this.findViewById(R.id.search_in_descriptions);
-        	
-        	// init search object
-        	Search search = new Search(searchField.getText().toString(), searchInDescriptions.isChecked());
-        	startNewSearch(search);
+        	submit();
         }
     };
 	/**

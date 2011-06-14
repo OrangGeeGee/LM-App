@@ -77,7 +77,7 @@ public class UTorrent {
 	
 	public void addTorrent(String downloadUrl, String cookie) throws ClientProtocolException, InvalidTokenException, IOException, Exception {
 		//http://[USERNAME]:[PASSWORD]@[IP]:[PORT]/gui/
-		String suffix = "?action=add-url&"+ "%$1s" +"&s="+ URLEncoder.encode(downloadUrl) +":COOKIE:"+cookie;
+		String suffix = "?action=add-url&"+ "{token}" +"&s="+ URLEncoder.encode(downloadUrl) +":COOKIE:"+cookie;
 		request(suffix);
 		//request();
 	}
@@ -108,7 +108,7 @@ public class UTorrent {
 	}
 	
 	public boolean test() throws ClientProtocolException, InvalidTokenException, IOException, Exception {
-		String resp = request("?action=getsettings&"+ "%$1s");
+		String resp = request("?action=getsettings&"+ "{token}");
 		if(resp.length()>0) return true;
 		else return false;
 	}
@@ -133,7 +133,7 @@ public class UTorrent {
 		return rawRequest(urlSuffix);
 	}
 	private String rawRequest(String urlSuffix) throws ClientProtocolException, IOException, Exception {
-		String tokenUrl = protocol + "://" + host + ":" + Integer.toString(port) + basePath + String.format(urlSuffix, "token="+token);
+		String tokenUrl = protocol + "://" + host + ":" + Integer.toString(port) + basePath + urlSuffix.replace("{token}", "token="+token);
 		HttpGet httpGet = new HttpGet(tokenUrl);
 		HttpResponse response = httpClient.execute(httpGet);
 		String page = EntityUtils.toString(response.getEntity());

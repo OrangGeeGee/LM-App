@@ -66,7 +66,7 @@ public class LM {
 	}
 	private LM() {}
 	
-	private Categories mCategories;
+	private Categories mCategories = new Categories();
 	private ArrayList<Category> mCategoriesList;
 	private boolean mInitSuccessful = false;
 	private boolean mInitInProgress = false;

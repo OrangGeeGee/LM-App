@@ -11,9 +11,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -57,6 +59,19 @@ public class DetailedSearchActivity extends Activity {
 		mQueryField = (EditText) findViewById(R.id.ds_query);
 		mInDescriptions = (CheckBox) findViewById(R.id.ds_in_descriptions);
 		mOnlyFreeLeech = (CheckBox) findViewById(R.id.ds_only_free_leech);
+		
+    	mQueryField.setOnKeyListener(new OnKeyListener() {
+    	    public boolean onKey(View v, int keyCode, KeyEvent event) {
+    	        // If the event is a key-down event on the "enter" button
+    	        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+    	            (keyCode == KeyEvent.KEYCODE_ENTER)) {
+    	          // Perform action on key press
+    	          submit();
+    	          return true;
+    	        }
+    	        return false;
+    	    }
+    	});
 		
 		// enable buttons at the bottom of detailed search layout
 		((Button) findViewById(R.id.ds_cancel)).setOnClickListener(mButtonCancelListener);
@@ -121,19 +136,21 @@ public class DetailedSearchActivity extends Activity {
 			return v;
 		}
 	}	
-	
+	public void submit() {
+	    Intent intent = new Intent();
+	    String query = mQueryField.getText().toString();
+	    boolean inDescription = mInDescriptions.isChecked();
+	    boolean onlyFreeLeech = mOnlyFreeLeech.isChecked();
+	    mSearch.setQuery(query);
+	    mSearch.setInDescription(inDescription);
+	    mSearch.setOnlyFreeLeech(onlyFreeLeech);
+	    intent.putExtra("search", mSearch.toBundle());
+	    setResult(RESULT_OK, intent);
+	    finish();
+	}
 	private OnClickListener mButtonSearchListener = new OnClickListener() {
 	    public void onClick(View v) {
-		    Intent intent = new Intent();
-		    String query = mQueryField.getText().toString();
-		    boolean inDescription = mInDescriptions.isChecked();
-		    boolean onlyFreeLeech = mOnlyFreeLeech.isChecked();
-		    mSearch.setQuery(query);
-		    mSearch.setInDescription(inDescription);
-		    mSearch.setOnlyFreeLeech(onlyFreeLeech);
-		    intent.putExtra("search", mSearch.toBundle());
-		    setResult(RESULT_OK, intent);
-		    finish();
+	    	submit();
 	    }
 	};
 	

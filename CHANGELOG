@@ -1,5 +1,11 @@
-﻿Šis update yra HOTFIX, ištaisomas updater'io bug'as ir 2.1 versijos force close'as mėginant paleisti update.
-Changelog:
+﻿Changelog:
+v0.4.3
+New Feature: Galimybė atlikti "Move to SD Card"
+Tweak: Enter klavišas paieškoje submittina paiešką, vietoj to, kad įterptų naują eilutę.
+
+v0.4.2
+Fixed: Bug'as neleidęs su uTorrent'u santykiauti. 
+
 v0.4.1
 Fixed: Atnaujinimas buvo biški pagedęs
 Fixed: 2.1 force close atnaujinant ištaisyta.

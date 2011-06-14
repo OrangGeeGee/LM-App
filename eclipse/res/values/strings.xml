@@ -42,10 +42,10 @@
     <string name="ut_test_success">Viskas OK</string>
     <string name="ut_unexpected_response">Netikėtas atsakymas iš uTorrent. Dar kartą patikrinkite ar viskas tikrai OK.</string>
     <string name="ut_cant_connect">Nepavyko prisijungti prie uTorrent.</string>
-    <string name="ut_send_in_progress">Siunčiame failą %1$s į jūsų uTorrent klientą.</string>
-    <string name="ut_send_success">Failas siunčiamas %1$s uTorrent kliente</string>
+    <string name="ut_send_in_progress">Siunčiame failą %s į jūsų uTorrent klientą.</string>
+    <string name="ut_send_success">Failas siunčiamas %s uTorrent kliente</string>
     
-    <string name="lm_search_results">Rezultatai pagal paeišką \"%1$s\"</string>
+    <string name="lm_search_results">Rezultatai pagal paeišką \"%s\"</string>
     <string name="lm_detailed_search">Detalioji paieška</string>
     <string name="lm_all_torrents">Visi torrentai</string>
     <string name="lm_single_torrent">Torrento aprašymas</string>
@@ -53,9 +53,9 @@
     <string name="lm_loading_more">Krauname daugiau torrentų...</string>
     <string name="lm_fetching_details">Siunčiame išsamesnę informaciją šiam torrentui...</string>
     <string name="lm_login_success">Sėkmingai prisijungta prie LinkoManijos.</string>
-    <string name="lm_file_downloading">Atsiunčiamas %1$s failas...</string>
+    <string name="lm_file_downloading">Atsiunčiamas %s failas...</string>
     <string name="lm_file_downloaded">Failas atsiųstas</string>
-    <string name="lm_file_downloaded_prompt">Failas atsiųstas į %1$s. Ar norite jį atidaryti?</string>
+    <string name="lm_file_downloaded_prompt">Failas atsiųstas į %s. Ar norite jį atidaryti?</string>
     
     <string name="lm_not_logged_in">Jūs esate neprisijungęs prie LinkoManijos, eikite į nustatymus ir prisijunkite.</string>
     <string name="lm_no_connectivity">Nepavyko prisijungti prie LinkoManijos, patikrinkite interneto ryšį.</string>

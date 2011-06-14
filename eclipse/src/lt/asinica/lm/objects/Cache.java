@@ -86,7 +86,7 @@ public class Cache {
 	                buf = new char[1024];
 	            }
 	            reader.close();
-	            Log.v("DEBUG", String.format("Succesfully loaded from cache %1$d \"%2$s\"", cacheLoc, identifier));
+	            Log.v("DEBUG", String.format("Succesfully loaded from cache %d \"%s\"", cacheLoc, identifier));
 	            return fileData.toString();	        	
 	        } catch(IOException e) {
 	        	Log.e("DEBUG", "Reading of cached file failed. "+e.getMessage());
@@ -104,7 +104,7 @@ public class Cache {
             fw.flush();
             fw.close();
             mCacheMap.put(identifier, mCounter);
-            Log.v("DEBUG", String.format("Succesfully wrote to cache %1$d \"%2$s\" (expires in %3$d mins)", mCounter, identifier, expiresAfterMinutes));
+            Log.v("DEBUG", String.format("Succesfully wrote to cache %d \"%s\" (expires in %d mins)", mCounter, identifier, expiresAfterMinutes));
         	long expiresAt = System.currentTimeMillis() + 1000 * 60 * expiresAfterMinutes;
         	mCacheExpiryList.put(mCounter, expiresAt);
         	Log.v("DEBUG", "Cache expires at "+String.valueOf(expiresAt));

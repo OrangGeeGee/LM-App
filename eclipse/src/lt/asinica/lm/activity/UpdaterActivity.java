@@ -1,7 +1,7 @@
 package lt.asinica.lm.activity;
 
+import java.io.File;
 import java.lang.reflect.Method;
-import java.text.Format;
 
 import lt.asinica.lm.R;
 import lt.asinica.lm.objects.Updater;
@@ -61,11 +61,12 @@ public class UpdaterActivity extends Activity {
 		} catch(NoSuchMethodException e) {
 			// API levels 7 and lower
 			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/lt.asinica.lm/cache/";
+			File extCacheDir = new File(path);
+			extCacheDir.mkdirs();
 		}
 		
-		Toast.makeText(UpdaterActivity.this, "Siunèiama á folderá  "+path, Toast.LENGTH_LONG).show();
-		
-		
+		Log.i("DEBUG", "Downloading update to "+path);
+		//Toast.makeText(UpdaterActivity.this, "Siunèiama á folderá  "+path, Toast.LENGTH_LONG).show();
 		String url = mUpdateDetails.getString("downloadUrl");
 		
 		
