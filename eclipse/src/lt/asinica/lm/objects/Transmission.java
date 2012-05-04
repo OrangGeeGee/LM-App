@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URLEncoder;
 
@@ -46,7 +47,11 @@ public class Transmission {
 	private String password;
 	private String basePath = "/transmission/rpc";
 	private DefaultHttpClient httpClient;
-	private String sessionId= null;
+	private String SessionId;
+	private String sessionHeaderName = "X-Transmission-Session-Id"; 
+	
+	
+	
 	public String getLabel() {
 		return host;
 	}
@@ -72,72 +77,94 @@ public class Transmission {
 	private Transmission() {
 		httpClient = new DefaultHttpClient();
 	}
-	
+	/**Sets the host port and authentication params for the HttpClient
+	 * 
+	 * @param host
+	 * @param port
+	 * @param username
+	 * @param password
+	 */
 	public void setServerInfo(String host, int port, String username, String password) {
 
-		if(this.host != host) {
-			this.host = host;
-		}
-		if(this.port != port) {
-			this.port = port;
-		}
-		boolean up = false;
-		if(this.username != username) {
-			up = true;
-			this.username = username;
-		}
-		if(this.password != password) {
-			up = true;
-			this.password = password;
-		}
-		if(up) {
-			UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
-			httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY, credentials);
-		}
-	}
-	public void addTorrent(String downloadUrl, String cookie) throws ClientProtocolException, InvalidTokenException, IOException, JSONException,Exception {
-		//http://[USERNAME]:[PASSWORD]@[IP]:[PORT]/gui/
-		//	String suffix = "?action=add-url&"+ "{token}" +"&s="+ URLEncoder.encode(downloadUrl) +":COOKIE:"+cookie;
-		//	request(suffix);
-		//	//request();
-		String sessionHeaderName = "X-Transmission-Session-Id"; 
-		JSONObject  jsonAddTorrent = null;
-		String jsonString = "{\"arguments\":{\"filename\":\"" + downloadUrl + "\",\"cookies\":\"" + cookie + "\"},\"method\": \"torrent-add\"}";
-		try {
-			jsonAddTorrent = new JSONObject (jsonString);
-		} catch (JSONException e) {
-			e.printStackTrace();
+			if(this.host != host) {
+				this.host = host;
+			}
+			if(this.port != port) {
+				this.port = port;
+			}
+			boolean up = false;
+			if(this.username != username) {
+				up = true;
+				this.username = username;
+			}
+			if(this.password != password) {
+				up = true;
+				this.password = password;
+			}
+			if(up) {
+				UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username, password);
+				httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY, credentials);
+			}
 		}
 		
-		if (jsonAddTorrent == null){
-			throw new Exception("JsonString creation failed");
+		private String getRPCSessionId(HttpPost httpPost) throws ClientProtocolException, IOException  {
+			StringEntity se = new StringEntity("{\"method\": \"session-stats\"}");
+			httpPost.setEntity(se);
+			HttpResponse response = httpClient.execute(httpPost);
+			Header headerSessionId = response.getFirstHeader(sessionHeaderName);
+		    if (headerSessionId.getValue() != null && headerSessionId.getValue() != SessionId){
+		    	SessionId = headerSessionId.getValue();
+		    	return SessionId;
+		    }
+			return null;
 		}
-		
-		 HttpPost httppost = new HttpPost(protocol + "://" + host + ":" + Integer.toString(port) + basePath);
-		 StringEntity se = new StringEntity(jsonAddTorrent.toString());
-		 httppost.setEntity(se);
-		// Execute
-	     HttpResponse response = httpClient.execute(httppost);
-	     Header headerSessionId = response.getFirstHeader(sessionHeaderName);
-	     if (headerSessionId.getValue() != null && headerSessionId.getValue() != sessionId){
-	    	 sessionId = headerSessionId.getValue();
-	    	 httppost.addHeader(sessionHeaderName, sessionId);
-	    	 response = httpClient.execute(httppost);
-	     }
-	    HttpEntity entity = response.getEntity();
-	    JSONObject json = null;
-	    if (entity != null) {
-	    	// Read JSON response
-	        InputStream inputStream = entity.getContent();
+	
+		private JSONObject getResponse(HttpPost httpPost, String requestString) throws Exception{
+			JSONObject responseObject = null;
+			StringEntity se = new StringEntity(requestString);
+			
+			String currentSessionId = getRPCSessionId(httpPost);
+			if (currentSessionId == null)
+				throw new Exception("Nerdau Transmission RPC Sessijos");
+			
+			if (SessionId!=null && SessionId.length() > 0 && SessionId.equals(currentSessionId)){
+				httpPost.addHeader(sessionHeaderName, SessionId);
+			}
+			else
+			{
+				SessionId = currentSessionId;
+				httpPost.addHeader(sessionHeaderName, SessionId);
+			}
+			httpPost.setEntity(se);
+			HttpResponse response = httpClient.execute(httpPost);
+			HttpEntity entity = response.getEntity();
+			InputStream inputStream = entity.getContent();
 	        String result = convertStreamToString(inputStream);
-	        json = new JSONObject(result);
 	        inputStream.close();
-	    }
-	    if (json == null){
-	    	throw new Exception("No response from server");
-	    }
-	    String result =json.getString("result"); 
-	    if (result.equals(new String("success"))){
+
+	        responseObject = new JSONObject(result);
+			return responseObject;
+		}
+		/**
+		 * Adds torrent url to the download list of Transmission client
+		 * Creates a JSON - RPC call and gets a response, anything else then SUCESS throws an exception
+		 * 
+		 * @param downloadUrl String 
+		 * @param cookie String
+		 * @throws ClientProtocolException
+		 * @throws InvalidTokenException
+		 * @throws IOException
+		 * @throws JSONException
+		 * @throws Exception
+		 */
+		public void addTorrent(String downloadUrl, String cookie) throws ClientProtocolException, InvalidTokenException, IOException, JSONException,Exception {
+		
+		String jsonString = "{\"arguments\":{\"filename\":\"" + downloadUrl + "\",\"cookies\":\"" + cookie + "\"},\"method\": \"torrent-add\"}";
+		HttpPost httppost = new HttpPost(protocol + "://" + host + ":" + Integer.toString(port) + basePath);
+		JSONObject jsonResponse = new JSONObject();
+		jsonResponse = getResponse(httppost,jsonString);
+	    String result =jsonResponse.getString("result"); 
+	    if (!result.equals(new String("success"))){
 	    	throw new Exception(result);
 	    }
 	    
@@ -168,6 +195,12 @@ public class Transmission {
             return "";
         }
 	}
+	
+	/**
+	 * Wrapper for test of the connection to the Transmission RPC client
+	 * @param context
+	 * @return
+	 */
 	public Runnable tester(final Activity context) {
 		return new Runnable() { public void run() {
 			String answer = null;
@@ -175,11 +208,18 @@ public class Transmission {
 				if(test()) {
 					answer = context.getString(R.string.tr_test_success);
 				}
-			} catch (InvalidTokenException e) {
-				Log.e("DEBUG", "Exception "+e.getClass().toString()+". "+e.getMessage());
-				answer = context.getString(R.string.tr_unexpected_response);
+			} 
+			catch (ClientProtocolException e) {
+				Log.e("DEBUG", "ClientProtocolException "+e.getClass().toString()+". "+e.getMessage());
+				answer = context.getString(R.string.tr_cant_connect)+" "+e.getMessage();
 				e.printStackTrace();					
-			} catch (Exception e) {
+			}
+			catch (IOException e) {
+				Log.e("DEBUG", "IOException "+e.getClass().toString()+". "+e.getMessage());
+				answer = context.getString(R.string.tr_cant_connect)+" "+e.getMessage();
+				e.printStackTrace();					
+			}
+			catch (Exception e) {
 				Log.e("DEBUG", "Exception "+e.getClass().toString()+". "+e.getMessage());
 				answer = context.getString(R.string.tr_cant_connect)+" "+e.getMessage();
 				e.printStackTrace();					
@@ -194,8 +234,20 @@ public class Transmission {
 		} };
 	}
 	
-	public boolean test() throws ClientProtocolException, InvalidTokenException, IOException, Exception {
-		 return true;
-		
+	/**
+	 * Test to see if Transmission client is accessible with given parameters
+	 * @return true if connection is OK otherwise FALSE
+	 * @throws ClientProtocolException
+	 * @throws InvalidTokenException
+	 * @throws IOException
+	 * @throws Exception
+	 */
+	public boolean test() throws ClientProtocolException, IOException {
+		HttpPost httpPost = new HttpPost(protocol + "://" + host + ":" + Integer.toString(port) + basePath);
+		String sessionIdTest = getRPCSessionId(httpPost);
+		if (sessionIdTest!=null && sessionIdTest.length() > 0){
+			return true;	
+		}
+		return false;
 	}
 }
