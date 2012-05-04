@@ -5,6 +5,7 @@ import java.util.Map;
 
 import lt.asinica.lm.LMApp;
 import lt.asinica.lm.R;
+import lt.asinica.lm.objects.Transmission;
 import lt.asinica.lm.objects.UTorrent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -78,6 +79,29 @@ public class Preferences extends PreferenceActivity {
             	return true;
             }
         });
+        
+        Preference checkTransmissionCon = (Preference) findPreference("transcheckConnectivity");
+        checkTransmissionCon.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        			
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+
+				String host = prefs.getString("transhostip", "");
+    			int port = 8080;
+    			try {
+    				port = Integer.parseInt(prefs.getString("transhostport", ""));
+    			} catch(Exception e) { }
+    			String username = prefs.getString("transhostusername", "");
+    			String password = prefs.getString("transhostpassword", "");
+    			Transmission torrent = Transmission.getInstance();
+    			torrent.setServerInfo(host, port, username, password);
+    			
+    			Thread thread = new Thread(torrent.tester( Preferences.this ), "Transmission Connectivity Tester Thread");
+            	thread.start();
+            	
+            	return true;
+			}
+		});
         
         Preference checkLM = (Preference) findPreference("logoutLM");
         checkLM.setOnPreferenceClickListener(new OnPreferenceClickListener() {
