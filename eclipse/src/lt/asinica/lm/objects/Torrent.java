@@ -267,6 +267,47 @@ public class Torrent {
 	    Thread thread =  new Thread(null, sendTorrents, "Torrent Sender Thread");
 	    thread.start();		
 	}
+	public void sendToTransmission(Activity context) {
+		String str = String.format( context.getString(R.string.tr_send_in_progress), getFileName() );
+		final ProgressDialog progressDialog = ProgressDialog.show(context,    
+	  	          context.getString(R.string.please_wait), str, true);
+		final Activity cntxt = context;
+		
+	    Runnable sendTorrents = new Runnable() {
+	        @Override
+	        public void run() {
+	        	String msg = null;
+				try {
+					Transmission tr = Transmission.getInstance();
+					String cookie = "login="+LM.getInstance().getSecret();
+					
+					tr.addTorrent(getDownloadUrl(), cookie);
+					msg = String.format( cntxt.getString(R.string.tr_send_success), tr.getLabel() );
+				} catch (InvalidTokenException e) {
+					msg = cntxt.getString(R.string.tr_unexpected_response);
+					e.printStackTrace();
+				} catch (NotLoggedInException e) {
+					msg = cntxt.getString(R.string.lm_not_logged_in);
+					e.printStackTrace();
+				} catch (Exception e) {
+					msg = cntxt.getString(R.string.tr_cant_connect) + " " + e.getMessage();
+					e.printStackTrace();
+				} finally {
+					progressDialog.dismiss();
+				}
+				if(msg!=null) {
+					Log.i("DEBUG", msg);
+					final String m = msg;
+					cntxt.runOnUiThread(new Runnable() { public void run() {
+						Toast.makeText(cntxt, m, Toast.LENGTH_LONG).show();
+					}});
+				}
+	        }
+	    };
+	    
+	    Thread thread =  new Thread(null, sendTorrents, "Torrent Sender Thread");
+	    thread.start();		
+	}
 	
 	public Bundle toBundle() {
 		return mInfo;
