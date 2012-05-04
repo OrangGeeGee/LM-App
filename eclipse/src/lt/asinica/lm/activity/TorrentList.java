@@ -42,6 +42,7 @@ public class TorrentList extends ListActivity implements OnScrollListener {
 	public static final int CONTEXT_VIEW_TORRENT = 0;
 	public static final int CONTEXT_OPEN_TORRENT = 1;
 	public static final int CONTEXT_SEND_TO_UTORRENT = 2;
+	public static final int CONTEXT_SEND_TO_TRANSMISSION = 3;
 
 	// class vars
 	private ProgressDialog mProgressDialog = null;
@@ -234,6 +235,7 @@ public class TorrentList extends ListActivity implements OnScrollListener {
 			menu.add(Menu.NONE, CONTEXT_VIEW_TORRENT, CONTEXT_VIEW_TORRENT, getString(R.string.view_torrent));
 			menu.add(Menu.NONE, CONTEXT_OPEN_TORRENT, CONTEXT_OPEN_TORRENT, getString(R.string.open_torrent));
 			menu.add(Menu.NONE, CONTEXT_SEND_TO_UTORRENT, CONTEXT_SEND_TO_UTORRENT, getString(R.string.send_to_utorrent));
+			menu.add(Menu.NONE, CONTEXT_SEND_TO_TRANSMISSION, CONTEXT_SEND_TO_TRANSMISSION, getString(R.string.send_to_transmission));
 		}
 	}
 	
@@ -251,6 +253,9 @@ public class TorrentList extends ListActivity implements OnScrollListener {
 	    	break;
 	    case CONTEXT_SEND_TO_UTORRENT:
 	    	t.sendToUTorrent(this);
+	    	break;
+	    case CONTEXT_SEND_TO_TRANSMISSION:
+	    	t.sendToTransmission(this);
 	    	break;
 	    }
 	    return true;
