@@ -40,6 +40,38 @@
 		                android:key="checkConnectivity" />
         </PreferenceCategory>
         <PreferenceCategory
+                android:title="Transmission susiejimas">
+		        <EditTextPreference
+		                android:title="Host IP/Name"
+		                android:summary="Jūsų Tranmission kliento IP adresas."
+		                android:name="Host IP/Name"
+		                android:key="transhostip"
+		                android:defaultValue="" />
+		        <EditTextPreference
+		                android:title="Incomming Port"
+		                android:summary="Port'as, kuriuo pasiekiamas Transmission'o Web UI. Dazniausia 9091"
+		                android:name="Incomming Port"
+		                android:key="transhostport"
+		                android:defaultValue="" />
+		        <EditTextPreference
+		                android:title="Username"
+		                android:summary="Transmission'o Web UI vartotojo vardas.Jei yra."
+		                android:name="Username"
+		                android:key="transhostusername"
+		                android:defaultValue="" />
+		        <EditTextPreference
+		                android:title="Password"
+		                android:summary="Transmission'o Web UI slaptažodis.Jei yra."
+		                android:name="Password"
+		                android:key="transhostpassword"
+		                android:password="true"
+		                android:defaultValue="" />		                		                
+		        <Preference
+		                android:title="Testuoti nustatymus"
+		                android:summary="Pamėginsime prisijungti prie jūsų Transmission kliento."
+		                android:key="transcheckConnectivity" />
+        </PreferenceCategory>
+        <PreferenceCategory
                 android:title="Kiti">
                 <EditTextPreference
 		                android:title="Atsiuntimų direktorija"
