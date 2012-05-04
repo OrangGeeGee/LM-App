@@ -34,6 +34,7 @@
     <string name="view_torrent">Peržiūrėti</string>
     <string name="open_torrent">Atsisiųsti .torrent failą</string>
     <string name="send_to_utorrent">Siųsti tiesiai į uTorrent</string>
+    <string name="send_to_transmission">Siųsti tiesiai į Transmission</string>
     
     <string name="login_username">Prisijungimo Vardas</string>
     <string name="login_password">Slaptažodis</string>
@@ -44,6 +45,12 @@
     <string name="ut_cant_connect">Nepavyko prisijungti prie uTorrent.</string>
     <string name="ut_send_in_progress">Siunčiame failą %s į jūsų uTorrent klientą.</string>
     <string name="ut_send_success">Failas siunčiamas %s uTorrent kliente</string>
+    
+    <string name="tr_test_success">Viskas OK</string>
+    <string name="tr_unexpected_response">Netikėtas atsakymas iš Transmission. Dar kartą patikrinkite ar viskas tikrai OK.</string>
+    <string name="tr_cant_connect">Nepavyko prisijungti prie Transmission.</string>
+    <string name="tr_send_in_progress">Siunčiame failą %s į jūsų Transmission klientą.</string>
+    <string name="tr_send_success">Failas siunčiamas %s Transmission kliente</string>
     
     <string name="lm_search_results">Rezultatai pagal paeišką \"%s\"</string>
     <string name="lm_detailed_search">Detalioji paieška</string>
