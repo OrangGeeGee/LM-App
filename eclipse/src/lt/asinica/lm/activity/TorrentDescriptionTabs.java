@@ -102,6 +102,9 @@ public class TorrentDescriptionTabs extends TabActivity {
         case R.id.send_to_utorrent:
         	mTorrent.sendToUTorrent(this);
         	return true;
+        case R.id.send_to_transmission:
+        	mTorrent.sendToTransmission(this);
+        	return true;
         default:
             return super.onOptionsItemSelected(item);
         }
