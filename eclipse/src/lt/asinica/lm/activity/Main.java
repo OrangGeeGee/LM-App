@@ -89,7 +89,8 @@ public class Main extends Activity {
     	
     	LM.getInstance().initSearch();
     	// display button at bottom to open prefs if uTorrent host is unspecified
-    	if( !mPreferences.contains("hostip") || mPreferences.getString("hostip", "").length() == 0 ) {
+    	if((( !mPreferences.contains("hostip") || mPreferences.getString("hostip", "").length() == 0 )) ||
+    	(( !mPreferences.contains("transhostip") || mPreferences.getString("transhostip", "").length() == 0 ))){
     		// make layout part with the button and text visible
     		((View) findViewById(R.id.main_utorrent_not_set_up)).setVisibility(View.VISIBLE);
     		
