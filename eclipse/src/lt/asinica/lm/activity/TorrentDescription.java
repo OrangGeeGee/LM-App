@@ -16,6 +16,7 @@ public class TorrentDescription extends Activity {
         // get info from intent
         mTorrent = new Torrent( getIntent().getExtras().getBundle("torrent") );
         
+        
         // find the description webview
     	WebView fullDescription = (WebView) findViewById(R.id.t_full_description);
     	

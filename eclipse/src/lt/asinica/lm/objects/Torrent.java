@@ -131,7 +131,7 @@ public class Torrent {
 	    	int freeLeechOffset = isFreeLeech() ? 1 : 0; 
 	    	int nfoOffset = rows.get(3 + freeLeechOffset).select("td").get(0).text().contains("NFO") ? 1 : 0;
 	    	
-	    	mInfo.putString("fullDescription", rows.get(2 + freeLeechOffset).select("td").get(1).html());
+	    	mInfo.putString("fullDescription", rows.get(1 + freeLeechOffset).select("td").get(1).html());
 	    	// uploaded by tr right after descrip
 	    	Element row = rows.get(3 + freeLeechOffset + nfoOffset);
 	    	Elements elems = row.select("td");
