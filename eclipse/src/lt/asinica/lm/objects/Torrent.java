@@ -64,6 +64,7 @@ public class Torrent {
 	public String getSeeders() { return mInfo.getString("seeders"); }
 	public String getLeechers() { return mInfo.getString("leechers"); }
 	public String getFullDescription() { return mInfo.getString("fullDescription"); }
+	public String getComments() {return mInfo.getString("Comments"); }
 	public String getUploadedBy() { return mInfo.getString("uploadedBy"); }
 	public String getFileCount() { return mInfo.getString("fileCount"); }
 	public String getThankYous() { return mInfo.getString("thankYous"); }
@@ -136,15 +137,20 @@ public class Torrent {
 	    	Element row = rows.get(3 + freeLeechOffset + nfoOffset);
 	    	Elements elems = row.select("td");
 	    	Element cell = elems.get(1);
+	    	
 	    	mInfo.putString("uploadedBy", cell.text());
 	    	// file count goes after uploaded by
 	    	mInfo.putString("fileCount", rows.get(4 + freeLeechOffset + nfoOffset).select("td").get(1).ownText());
 	    	// thank yous in the bottom
 	    	mInfo.putString("thankYous", rows.select("#padekos").get(0).text());
 	    	mInfo.putBoolean("thanked", rows.select("#padekoti input").size() == 0);
+	    	// For testing purposes of parsing comments
+	    	Elements comm_rows = doc.select("#comments");
+	    	mInfo.putString("Comments", comm_rows.html());
+//	    	Log.e("LM_DEBUG", comm_rows.get(0).html());
 	    			//get(6 + freeLeechOffset).select("td").get(1).ownText());
 	    	// TODO find uploaded_by, file_count, download_count, thank_yous 
-    	} catch (Exception e) {
+    	} catch (Exception e) { 
     		Log.e("DEBUG", "Can not parse document to torrent info. "+e.getMessage());
     		e.printStackTrace();
     	}		
