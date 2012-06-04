@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
+import lt.asinica.lm.Const;
 import lt.asinica.lm.R;
 import lt.asinica.lm.activity.TorrentDescriptionTabs;
 import lt.asinica.lm.exceptions.ExternalStorageNotAvaliableException;
@@ -28,6 +30,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
 
 public class Torrent {
 	
@@ -64,7 +69,7 @@ public class Torrent {
 	public String getSeeders() { return mInfo.getString("seeders"); }
 	public String getLeechers() { return mInfo.getString("leechers"); }
 	public String getFullDescription() { return mInfo.getString("fullDescription"); }
-	public String getComments() {return mInfo.getString("Comments"); }
+	public String getComments() {return mInfo.getString(Const.COMMENT_STRING); }
 	public String getUploadedBy() { return mInfo.getString("uploadedBy"); }
 	public String getFileCount() { return mInfo.getString("fileCount"); }
 	public String getThankYous() { return mInfo.getString("thankYous"); }
@@ -128,7 +133,7 @@ public class Torrent {
 	public void parseTorrentInfo(Document doc) {
     	try {
     		Elements rows = doc.select("#content table:not(.main) > tr");
-	    	// apra�ymo tr > antras td
+	    	// apraymo tr > antras td
 	    	int freeLeechOffset = isFreeLeech() ? 1 : 0; 
 	    	int nfoOffset = rows.get(3 + freeLeechOffset).select("td").get(0).text().contains("NFO") ? 1 : 0;
 	    	
@@ -145,8 +150,12 @@ public class Torrent {
 	    	mInfo.putString("thankYous", rows.select("#padekos").get(0).text());
 	    	mInfo.putBoolean("thanked", rows.select("#padekoti input").size() == 0);
 	    	// For testing purposes of parsing comments
-	    	Elements comm_rows = doc.select("#comments");
-	    	mInfo.putString("Comments", comm_rows.html());
+	    	Elements commRows = doc.select("#comments");
+	    	
+	    	// Parsing user comments
+	    	mInfo.putString(Const.COMMENT_STRING, parseComments(commRows.get(0).children()));
+	    	
+	    	
 //	    	Log.e("LM_DEBUG", comm_rows.get(0).html());
 	    			//get(6 + freeLeechOffset).select("td").get(1).ownText());
 	    	// TODO find uploaded_by, file_count, download_count, thank_yous 
@@ -155,7 +164,43 @@ public class Torrent {
     		e.printStackTrace();
     	}		
 	}
-	
+	private String parseComments(Elements cRows){
+		// Parsing elements and putting them to json format to read
+		// Šioje vietoje galima buvo apseiti ir be papildomo lib'o, kas sumažintų vietą pačio apso, 
+		// tačiau niekad nedariau tokiu būdu, tad pačiam buvo įdomu ar suveiks.
+		
+		try {
+			ArrayList<TorrentComment> tComments = new ArrayList<TorrentComment>();
+			
+			Log.e(Const.LOG, "We have "+cRows.size()+" elements");
+//		Log.e(Const.LOG, "We have "+cRows.get(0).html()+" elements");
+			for(int i = 0; i < cRows.size(); i++){
+				if(cRows.get(i) != null){
+					String name = cRows.get(i).getElementsByClass("comment-user").text();
+					String text = cRows.get(i).getElementsByClass("comment-text").html();
+					String karma = cRows.get(i).getElementsByClass("comment-balance").text();
+					String avatar = cRows.get(i).getElementsByClass("comment-avatar").html();
+					if (!name.equals("")) {
+						TorrentComment tCom = new TorrentComment();
+						String[] tmp = name.split(",");
+						tCom.setName(tmp[0]);
+						tCom.setDate(tmp[1]);
+						tCom.setText(text);
+						tCom.setKarma(karma);
+						tCom.setPhotoUrl(avatar);
+						tComments.add(tCom);
+					}
+				}
+			}
+			Gson gson = new Gson();
+			String jsoned = gson.toJson(tComments);
+			return jsoned;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+//		Log.e(Const.LOG, "Parsed elements: "+jsoned);
+	}
 	public void view(Activity context) {
 		Intent intent = new Intent(context, TorrentDescriptionTabs.class);
 		intent.putExtra("torrent", toBundle());

@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- <LinearLayout -->
-<!-- xmlns:android="http://schemas.android.com/apk/res/android" -->
-<!-- android:layout_width="match_parent" -->
-<!-- android:layout_height="match_parent" -->
-<!-- android:padding="10dip"> -->
-<!-- <TextView -->
-<!-- android:layout_width="match_parent" -->
-<!-- android:layout_height="match_parent" -->
-<!-- android:text="Komentarų palaikymas jau dirbtuvėse!" /> -->
-<!-- </LinearLayout> -->
-<WebView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/t_comments"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content" />
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/FillFill"
+    android:orientation="vertical"
+    >
+    <TextView 
+        android:id="@+id/comment_size"
+        style="@style/FillWrap"
+        android:text="@string/comment_header"
+        android:gravity="center_vertical|center_horizontal"
+        />
+    <ScrollView 
+        style="@style/FillFill"
+        android:fillViewport="true"
+        >
+        <LinearLayout 
+            style="@style/FillWrap"
+            android:id="@+id/comment_container"
+            android:orientation="vertical"
+            >
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

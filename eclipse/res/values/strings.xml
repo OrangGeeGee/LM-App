@@ -75,4 +75,7 @@
     <string name="updater_update_downloading">Siunčiamas atnaujinimas</string>
     <string name="updater_activity_label">LM App atnaujinimas</string>
     <string name="updater_failed_to_download">Nepavyko atsiųsti atnaujinimo.</string>
+    
+    <string name="comment_header">Komentarų skaičius: </string>
+    
 </resources>
