@@ -16,6 +16,7 @@ import lt.asinica.lm.exceptions.NotLoggedInException;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -154,8 +155,19 @@ public class Torrent {
 	    	
 	    	// Parsing user comments
 	    	mInfo.putString(Const.COMMENT_STRING, parseComments(commRows.get(0).children()));
-	    	
-	    	
+	    	String lfId = "2261854";
+	    	URI url = new URI("http://www.linkomanija.net/ajax/getreplies.php");
+	    	Document doc2 = Jsoup.connect(url.toASCIIString())
+	    			
+	    			.data("id", "2261854")
+	    			.data("details", "218126")
+	    			.userAgent("Mozilla")
+	    			.post(); 
+//	    	Document doc2 = Jsoup.connect("http://www.linkomanija.net/ajax/getreplies.php?id="+lfId+"&details="+getId())
+//	    			  // and other fields which are being passed in post request.
+//	    			  .userAgent("Mozilla")
+//	    			  .get(); 
+	    	Log.e("TEST", doc2.html());
 //	    	Log.e("LM_DEBUG", comm_rows.get(0).html());
 	    			//get(6 + freeLeechOffset).select("td").get(1).ownText());
 	    	// TODO find uploaded_by, file_count, download_count, thank_yous 

@@ -227,6 +227,11 @@ public class LM {
 		t.parseTorrentInfo(doc);
     	return t;		
 	}
+	public String getAnsweredComment(Torrent t, String commentId) throws NotLoggedInException, IOException {
+		String url = t.getDescriptionUrl();
+		Document doc = performQuery(url);
+		return doc.html();		
+	}
 	
 	public Document performQuery(String url) throws NotLoggedInException, IOException {
 		Log.v("DEBUG", "LM navigating to "+url);
