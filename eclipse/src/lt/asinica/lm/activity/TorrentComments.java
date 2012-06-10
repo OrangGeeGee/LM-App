@@ -59,7 +59,7 @@ public class TorrentComments extends Activity {
 
 				TextView name = (TextView) child
 						.findViewById(R.id.comment_name);
-				name.setText(comments.get(i).getName());
+				name.setText(comments.get(i).getName()+comments.get(i).getCommentId());
 				TextView text = (TextView) child
 						.findViewById(R.id.comment_text);
 				text.setText((Html.fromHtml(comments.get(i).getText())));

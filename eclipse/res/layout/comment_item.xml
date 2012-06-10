@@ -4,7 +4,6 @@
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
   android:background="@drawable/comment_back"
-  android:layout_margin="5dp"
   android:orientation="vertical">
   <LinearLayout 
       style="@style/FillWrap"
@@ -42,13 +41,25 @@
           android:textSize="26dp"
           />
   </LinearLayout>
-  <View 
-      android:layout_height="1dp"
-      android:layout_width="fill_parent"
-      android:layout_marginRight="10dp"
-      android:layout_marginLeft="10dp"
-      android:background="#aaccef"
-      />
+  <LinearLayout 
+      style="@style/FillWrap"
+			android:orientation="horizontal"
+			android:gravity="center_vertical|center_horizontal"
+      >
+		  <View 
+		      android:layout_weight="1"
+		      android:layout_height="1dp"
+		      android:layout_width="fill_parent"
+		      android:layout_marginRight="10dp"
+		      android:layout_marginLeft="10dp"
+		      android:background="#aaccef"
+		      />
+      <Button 
+          android:layout_width="70dp"
+          android:layout_height="30dp"
+          android:layout_weight="1"
+          />
+  </LinearLayout>
   <TextView 
       android:id="@+id/comment_text"
       android:layout_width="fill_parent"

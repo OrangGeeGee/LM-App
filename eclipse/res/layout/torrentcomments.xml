@@ -18,6 +18,7 @@
             style="@style/FillWrap"
             android:id="@+id/comment_container"
             android:orientation="vertical"
+            android:padding="5dp"
             >
         </LinearLayout>
     </ScrollView>

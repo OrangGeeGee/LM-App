@@ -6,6 +6,7 @@ public class TorrentComment {
 	private String date;
 	private String photoUrl; // Dont think that will be necessary
 	private String karma;
+	private String commentId;
 	
 	public TorrentComment() {
 		super();
@@ -49,5 +50,15 @@ public class TorrentComment {
 	}
 	public String toString(){
 		return name+"/"+date+"/"+text+"/"+karma+"/"+photoUrl;
+	}
+	public String getCommentId() {
+		if(commentId != null){
+			return commentId;
+		} else {
+			return "";
+		}
+	}
+	public void setCommentId(String commentId) {
+		this.commentId = commentId;
 	}
 }
