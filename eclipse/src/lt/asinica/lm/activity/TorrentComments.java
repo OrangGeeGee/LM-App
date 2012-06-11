@@ -26,10 +26,10 @@ public class TorrentComments extends Activity {
 	// public void onCreate(Bundle savedInstanceState) {
 	// super.onCreate(savedInstanceState);
 	// setContentView(R.layout.torrentcomments);
-	// // TODO implement comments display
 	// }
 
 	private Torrent mTorrent;
+	private Gson gson;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,8 +37,7 @@ public class TorrentComments extends Activity {
 
 		// get info from intent
 		mTorrent = new Torrent(getIntent().getExtras().getBundle("torrent"));
-		// Parsing torrents
-		Gson gson = new Gson();
+		gson = new Gson();
 
 		Type collectionType = new TypeToken<ArrayList<TorrentComment>>() {
 		}.getType();
@@ -46,26 +45,33 @@ public class TorrentComments extends Activity {
 				mTorrent.getComments(), collectionType);
 
 		TextView commentSize = (TextView) findViewById(R.id.comment_size);
-		commentSize.setText(getResources().getString(R.string.comment_header)
-				+ tComment.size());
-		// for(int i = 0; i < tComment.size(); i++){
-		// Log.e(Const.LOG, ""+tComment.get(i).toString());
-		// }
-
-		putCommentsToLL(tComment);
+		if (tComment != null) {
+			commentSize.setText(getResources().getString(
+					R.string.comment_header)
+					+ tComment.size());
+			// for(int i = 0; i < tComment.size(); i++){
+			// Log.e(Const.LOG, ""+tComment.get(i).toString());
+			// }
+			LinearLayout ll = (LinearLayout) findViewById(R.id.comment_container);
+			putCommentsToLL(tComment, ll);
+		} else {
+			commentSize.setText(getResources().getString(R.string.comment_no_comment));
+		}
 	}
 
-	private void putCommentsToLL(ArrayList<TorrentComment> comments) {
+	private void putCommentsToLL(ArrayList<TorrentComment> comments,
+			LinearLayout container) {
 		try {
-			LinearLayout ll = (LinearLayout) findViewById(R.id.comment_container);
-
+			LinearLayout ll = container;
+			ll.removeAllViews();
 			for (int i = 0; i < comments.size(); i++) {
 				View child = getLayoutInflater().inflate(R.layout.comment_item,
 						null);
 
 				TextView name = (TextView) child
 						.findViewById(R.id.comment_name);
-				name.setText(comments.get(i).getName()+comments.get(i).getCommentId());
+				name.setText(comments.get(i).getName()
+						+ comments.get(i).getCommentId());
 				TextView text = (TextView) child
 						.findViewById(R.id.comment_text);
 				text.setText((Html.fromHtml(comments.get(i).getText())));
@@ -75,29 +81,39 @@ public class TorrentComments extends Activity {
 				TextView karma = (TextView) child
 						.findViewById(R.id.comment_karma);
 				karma.setText(comments.get(i).getKarma());
-				Button more = (Button) child.findViewById(R.id.more_button);
-				if(comments.get(i).isMoreComments()){
+				Button moreButton = (Button) child
+						.findViewById(R.id.more_button);
+				if (comments.get(i).isMoreComments()) {
 					final String commentId = comments.get(i).getCommentId();
-					more.setVisibility(View.VISIBLE);
-					more.setOnClickListener(new OnClickListener() {
+					final LinearLayout moreLL = (LinearLayout) child
+							.findViewById(R.id.more_comments);
+					final int ii = i;
+					moreButton.setVisibility(View.VISIBLE);
+					moreButton.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View arg0) {
-							Log.e("1234", "Expanding "+commentId);
 							try {
-								LM.getInstance().getMoreComments(mTorrent, commentId);
+								String commentJson = LM.getInstance()
+										.getMoreComments(mTorrent, commentId);
+								Type collectionType = new TypeToken<ArrayList<TorrentComment>>() {
+								}.getType();
+								ArrayList<TorrentComment> newComments = gson
+										.fromJson(commentJson, collectionType);
+								putCommentsToLL(newComments, moreLL);
+
 							} catch (NotLoggedInException e) {
 								e.printStackTrace();
 							} catch (IOException e) {
 								e.printStackTrace();
-							} catch (Exception e){
+							} catch (Exception e) {
 								e.printStackTrace();
 							}
 						}
 					});
 				} else {
-					more.setVisibility(View.GONE);
+					moreButton.setVisibility(View.GONE);
 				}
-				
+
 				ll.addView(child);
 			}
 			ll.invalidate();

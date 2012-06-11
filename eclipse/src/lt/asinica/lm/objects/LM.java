@@ -221,11 +221,15 @@ public class LM {
 		thanker.start();
 		Cache.getInstance().cleanSingle(t.getDescriptionUrl());
 	}
-	public void getMoreComments(Torrent t, String moreId) throws NotLoggedInException, IOException {
+	public String getMoreComments(Torrent t, String moreId) throws NotLoggedInException, IOException {
 		String urlId = t.getId();
 		Document doc = performMoreQuery(urlId, moreId);
-		Log.e("1234", doc.html());
-//		t.parseTorrentInfo(doc);
+//		Log.e("1234", doc.html());
+		Elements commRows = doc.getElementsByClass("comment");
+//		Log.e("LM", ""+commRows.size());
+		return TorrentCommentUtils.parseComments(commRows);
+		
+//		return doc;
 	}
 	public Torrent getMoreInfo(Torrent t) throws NotLoggedInException, IOException {
 		String url = t.getDescriptionUrl();

@@ -1,5 +1,7 @@
 package lt.asinica.lm.objects;
 
+import java.util.ArrayList;
+
 public class TorrentComment {
 	private String name;
 	private String text;
@@ -8,6 +10,8 @@ public class TorrentComment {
 	private String karma;
 	private String commentId;
 	private boolean moreComments;
+	private ArrayList<TorrentComment> moreTorrents;
+	private boolean expanded = false;
 	
 	public TorrentComment() {
 		super();
@@ -67,6 +71,18 @@ public class TorrentComment {
 	}
 	public void setMoreComments(boolean moreComments) {
 		this.moreComments = moreComments;
+	}
+	public ArrayList<TorrentComment> getMoreTorrents() {
+		return moreTorrents;
+	}
+	public void setMoreTorrents(ArrayList<TorrentComment> moreTorrents) {
+		this.moreTorrents = moreTorrents;
+	}
+	public boolean isExpanded() {
+		return expanded;
+	}
+	public void setExpanded(boolean expanded) {
+		this.expanded = expanded;
 	}
 	
 }

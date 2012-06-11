@@ -223,110 +223,16 @@ public class Torrent {
 					rows.select("#padekoti input").size() == 0);
 			// For testing purposes of parsing comments
 			Elements commRows = doc.select("#comments");
-
-			// Parsing user comments
-			mInfo.putString(Const.COMMENT_STRING, parseComments(commRows.get(0)
-					.children()));
-			String lfId = "2261854";
-			// URI url = new
-			// URI("http://www.linkomanija.net/ajax/getreplies.php");
-			// Document doc2 = Jsoup.connect(url.toASCIIString())
-			// .data("id", "2261854")
-			// .data("details", "218126")
-			// .userAgent("Mozilla")
-			// .post();
-			// Document doc2 =
-			// Jsoup.connect("http://www.linkomanija.net/ajax/getreplies.php?id="+lfId+"&details="+getId())
-			// // and other fields which are being passed in post request.
-			// .userAgent("Mozilla")
-			// .get();
-			// Log.e("TEST", doc2.html());
-			// Log.e("LM_DEBUG", comm_rows.get(0).html());
-			// get(6 + freeLeechOffset).select("td").get(1).ownText());
-			// TODO find uploaded_by, file_count, download_count, thank_yous
+			// Log.e("LM", "Comments from: "+commRows.html());
+			if (commRows.size() > 0 && commRows != null) {
+				mInfo.putString(Const.COMMENT_STRING, TorrentCommentUtils
+						.parseComments(commRows.get(0).children()));
+			}
 		} catch (Exception e) {
 			Log.e("DEBUG",
 					"Can not parse document to torrent info. " + e.getMessage());
 			e.printStackTrace();
 		}
-	}
-	
-	private boolean parseOutReplied(String lf) {
-		if(lf.contains("expand")){
-			return true;
-		}
-		return false;
-	}
-	private String parseOutId(String lf) {
-		String parsedPrefix = takeToken(2, "(", lf);
-		String parsedSuffix = takeToken(0, ")", parsedPrefix);
-		return parsedSuffix;
-	}
-	/**Tokenize string and take token number i
-	 * @param i - number of token to take
-	 * @param delim - token delimiter
-	 * @param lf - string to look into
-	 * @return - Delimited string
-	 */
-	private String takeToken(int i, String delim, String lf){
-		StringTokenizer tokens = new StringTokenizer(lf, delim);
-		int c = 0;
-		String needed;
-		while(tokens.hasMoreTokens()){
-			needed = tokens.nextToken();
-			if(c == i){
-				return needed;
-			}
-			c++;
-		}
-		return null;
-	}
-	
-	private String parseComments(Elements cRows) {
-		// Parsing elements and putting them to json format to read
-		// Šioje vietoje galima buvo apseiti ir be papildomo lib'o, kas
-		// sumažintų vietą pačio apso,
-		// tačiau niekad nedariau tokiu būdu, tad pačiam buvo įdomu ar suveiks.
-
-		ArrayList<TorrentComment> tComments = new ArrayList<TorrentComment>();
-		try {
-
-			Log.e(Const.LOG, "We have " + cRows.size() + " elements");
-			for (int i = 0; i < cRows.size(); i++) {
-				if (cRows.get(i) != null) {
-					String name = cRows.get(i)
-							.getElementsByClass("comment-user").text();
-					String text = cRows.get(i)
-							.getElementsByClass("comment-text").html();
-					String karma = cRows.get(i)
-							.getElementsByClass("comment-balance").text();
-					String avatar = cRows.get(i)
-							.getElementsByClass("comment-avatar").html();
-					Elements commentId = cRows.get(i).getElementsByClass(
-							"comment-actions");
-					
-					if (!name.equals("")) {
-						TorrentComment tCom = new TorrentComment();
-						String[] tmp = name.split(",");
-						tCom.setName(tmp[0]);
-						tCom.setDate(tmp[1]);
-						tCom.setText(text);
-						tCom.setKarma(karma);
-						tCom.setPhotoUrl(avatar);
-						tCom.setCommentId(parseOutId(commentId.html()));
-						tCom.setMoreComments(parseOutReplied(commentId.html()));
-						tComments.add(tCom);
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		Gson gson = new Gson();
-		String jsoned = gson.toJson(tComments);
-		return jsoned;
-		// Log.e(Const.LOG, "Parsed elements: "+jsoned);
 	}
 
 	public void view(Activity context) {
