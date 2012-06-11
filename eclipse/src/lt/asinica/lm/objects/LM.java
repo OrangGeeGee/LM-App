@@ -54,6 +54,7 @@ public class LM {
 	public final static String BROWSE_URL = BASE_URL+"/browse.php?incldead=0";
 	public final static String THANK_URL = BASE_URL+"/ajax/thank.php";
 	public final static String LOGIN_URL = BASE_URL+"/takelogin.php";
+	public final static String MORE_URL = BASE_URL+"/ajax/getreplies.php";
 	
 	
 	// singleton apratus
@@ -220,7 +221,12 @@ public class LM {
 		thanker.start();
 		Cache.getInstance().cleanSingle(t.getDescriptionUrl());
 	}
-	
+	public void getMoreComments(Torrent t, String moreId) throws NotLoggedInException, IOException {
+		String urlId = t.getId();
+		Document doc = performMoreQuery(urlId, moreId);
+		Log.e("1234", doc.html());
+//		t.parseTorrentInfo(doc);
+	}
 	public Torrent getMoreInfo(Torrent t) throws NotLoggedInException, IOException {
 		String url = t.getDescriptionUrl();
 		Document doc = performQuery(url);
@@ -260,6 +266,19 @@ public class LM {
 				cacheForXMinutes = 5;
 			cacheObj.put(url, doc.html(), cacheForXMinutes);
 		}
+		return doc;
+	}
+	public Document performMoreQuery(String urlId, String commentId) throws NotLoggedInException, IOException {
+		Log.v("DEBUG", "LM navigating to "+urlId);
+		Document doc = null;
+			String loginSecret = getSecret();
+			doc = Jsoup.connect(MORE_URL)
+				.userAgent("Mozilla")
+				.cookie("login", loginSecret)
+				.timeout(10000)
+				.data("id", commentId)
+				.data("details", urlId)
+				.get();
 		return doc;
 	}
 	

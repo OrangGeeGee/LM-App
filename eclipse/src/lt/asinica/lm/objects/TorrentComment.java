@@ -7,6 +7,7 @@ public class TorrentComment {
 	private String photoUrl; // Dont think that will be necessary
 	private String karma;
 	private String commentId;
+	private boolean moreComments;
 	
 	public TorrentComment() {
 		super();
@@ -61,4 +62,11 @@ public class TorrentComment {
 	public void setCommentId(String commentId) {
 		this.commentId = commentId;
 	}
+	public boolean isMoreComments() {
+		return moreComments;
+	}
+	public void setMoreComments(boolean moreComments) {
+		this.moreComments = moreComments;
+	}
+	
 }

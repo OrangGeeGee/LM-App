@@ -55,6 +55,7 @@
 		      android:background="#aaccef"
 		      />
       <Button 
+          android:id="@+id/more_button"
           android:layout_width="70dp"
           android:layout_height="30dp"
           android:layout_weight="1"

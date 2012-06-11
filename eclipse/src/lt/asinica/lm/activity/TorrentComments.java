@@ -1,15 +1,21 @@
 package lt.asinica.lm.activity;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import lt.asinica.lm.R;
+import lt.asinica.lm.exceptions.NotLoggedInException;
+import lt.asinica.lm.objects.LM;
 import lt.asinica.lm.objects.Torrent;
 import lt.asinica.lm.objects.TorrentComment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -69,7 +75,29 @@ public class TorrentComments extends Activity {
 				TextView karma = (TextView) child
 						.findViewById(R.id.comment_karma);
 				karma.setText(comments.get(i).getKarma());
-
+				Button more = (Button) child.findViewById(R.id.more_button);
+				if(comments.get(i).isMoreComments()){
+					final String commentId = comments.get(i).getCommentId();
+					more.setVisibility(View.VISIBLE);
+					more.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View arg0) {
+							Log.e("1234", "Expanding "+commentId);
+							try {
+								LM.getInstance().getMoreComments(mTorrent, commentId);
+							} catch (NotLoggedInException e) {
+								e.printStackTrace();
+							} catch (IOException e) {
+								e.printStackTrace();
+							} catch (Exception e){
+								e.printStackTrace();
+							}
+						}
+					});
+				} else {
+					more.setVisibility(View.GONE);
+				}
+				
 				ll.addView(child);
 			}
 			ll.invalidate();

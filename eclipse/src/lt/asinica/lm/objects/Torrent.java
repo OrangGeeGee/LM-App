@@ -250,11 +250,17 @@ public class Torrent {
 			e.printStackTrace();
 		}
 	}
-
-	private void parseOutId(String lf) {
+	
+	private boolean parseOutReplied(String lf) {
+		if(lf.contains("expand")){
+			return true;
+		}
+		return false;
+	}
+	private String parseOutId(String lf) {
 		String parsedPrefix = takeToken(2, "(", lf);
 		String parsedSuffix = takeToken(0, ")", parsedPrefix);
-		Log.e("Parserd", parsedSuffix);
+		return parsedSuffix;
 	}
 	/**Tokenize string and take token number i
 	 * @param i - number of token to take
@@ -298,10 +304,8 @@ public class Torrent {
 							.getElementsByClass("comment-avatar").html();
 					Elements commentId = cRows.get(i).getElementsByClass(
 							"comment-actions");
-					Log.e("asd", commentId.html());
-
+					
 					if (!name.equals("")) {
-						parseOutId(commentId.html());
 						TorrentComment tCom = new TorrentComment();
 						String[] tmp = name.split(",");
 						tCom.setName(tmp[0]);
@@ -309,7 +313,8 @@ public class Torrent {
 						tCom.setText(text);
 						tCom.setKarma(karma);
 						tCom.setPhotoUrl(avatar);
-						// tCom.setCommentId(commentId);
+						tCom.setCommentId(parseOutId(commentId.html()));
+						tCom.setMoreComments(parseOutReplied(commentId.html()));
 						tComments.add(tCom);
 					}
 				}
