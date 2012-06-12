@@ -77,6 +77,8 @@
             android:id="@+id/comment_text"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:scrollHorizontally="true"
             android:padding="5dp" />
 <!--         Spot for nested comments -->
         <LinearLayout 

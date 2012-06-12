@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import lt.asinica.lm.R;
 import lt.asinica.lm.exceptions.NotLoggedInException;
+import lt.asinica.lm.helpers.URLImageParser;
 import lt.asinica.lm.objects.LM;
 import lt.asinica.lm.objects.Torrent;
 import lt.asinica.lm.objects.TorrentComment;
@@ -13,6 +14,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -73,7 +75,9 @@ public class TorrentComments extends Activity {
 				name.setText(comments.get(i).getName());
 				TextView text = (TextView) child
 						.findViewById(R.id.comment_text);
-				text.setText((Html.fromHtml(comments.get(i).getText())));
+				URLImageParser p = new URLImageParser(text, this);
+				Spanned htmlSpan = Html.fromHtml(comments.get(i).getText(), p, null);
+				text.setText(htmlSpan);
 				TextView date = (TextView) child
 						.findViewById(R.id.comment_date);
 				date.setText(comments.get(i).getDate());
